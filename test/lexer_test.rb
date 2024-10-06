@@ -8,7 +8,29 @@ module Zaid
     # Tokenization.
 
     def test_comment
-      assert_equal [[:COMMENT, '# هذا تعليق']], Zaid::Lexer.new.tokenize('# هذا تعليق')
+      code = <<~CODE
+        # هذا تعليق في بداية البرنامج
+        عدد = ٥
+        # هذا تعليق في وسط البرنامج
+        # وهذا تعليق آخر معه
+        اطبع(عدد)
+        # أخيرا، هذا تعليق في نهاية البرنامج
+      CODE
+
+      tokens = [
+        [:NEWLINE, "\n"],
+        [:IDENTIFIER, 'عدد'],
+        ['=', '='],
+        [:NUMBER, 5],
+        [:NEWLINE, "\n"],
+        [:IDENTIFIER, 'اطبع'],
+        ['(', '('],
+        [:IDENTIFIER, 'عدد'],
+        [')', ')'],
+        [:NEWLINE, "\n"]
+      ]
+
+      assert_equal tokens, Zaid::Lexer.new.tokenize(code)
     end
 
     def test_identifier

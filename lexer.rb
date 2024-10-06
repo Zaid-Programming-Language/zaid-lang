@@ -140,9 +140,7 @@ module Zaid
       end
     end
 
-    def parse_comment(comment, tokens, _)
-      tokens << [:COMMENT, comment]
-
+    def parse_comment(comment, _, _)
       comment.size
     end
 
@@ -181,7 +179,7 @@ module Zaid
 
       raise 'خطأ في المسافة البادئة للأسطر.' if indent.size > current_indent
 
-      tokens << [:NEWLINE, "\n"] if indent.size == current_indent
+      tokens << [:NEWLINE, "\n"] if indent.size == current_indent && tokens.last != [:NEWLINE, "\n"]
 
       if indent.size < current_indent
         while indent.size < (indent_stack.last || 0)
