@@ -71,22 +71,22 @@ module Zaid
     end
 
     def test_arabic_operators
-      assert_equal [[:NUMBER, 5], [:EQUALS, 'يساوي'], [:NUMBER, 3]],
+      assert_equal [[:NUMBER, 5], [:EQUALS, Lexer::EQUALS], [:NUMBER, 3]],
                    Zaid::Lexer.new.tokenize('٥ يساوي ٣', run_compression: false)
 
-      assert_equal [[:NUMBER, 5], [:NOT, 'لا'], [:EQUALS, 'يساوي'], [:NUMBER, 3]],
+      assert_equal [[:NUMBER, 5], [:NOT, Lexer::NOT], [:EQUALS, Lexer::EQUALS], [:NUMBER, 3]],
                    Zaid::Lexer.new.tokenize('٥ لا يساوي ٣', run_compression: false)
 
-      assert_equal [[:NUMBER, 5], [:GREATER, 'أكبر'], [:THAN, 'من'], [:NUMBER, 3]],
+      assert_equal [[:NUMBER, 5], [:GREATER, Lexer::GREATER], [:THAN, Lexer::THAN], [:NUMBER, 3]],
                    Zaid::Lexer.new.tokenize('٥ أكبر من ٣', run_compression: false)
 
-      assert_equal [[:NUMBER, 5], [:LESS, 'أصغر'], [:THAN, 'من'], [:NUMBER, 3]],
+      assert_equal [[:NUMBER, 5], [:LESS, Lexer::LESS], [:THAN, Lexer::THAN], [:NUMBER, 3]],
                    Zaid::Lexer.new.tokenize('٥ أصغر من ٣', run_compression: false)
 
-      assert_equal [[:NUMBER, 5], [:GREATER, 'أكبر'], [:THAN, 'من'], [:OR, 'أو'], [:EQUALS, 'يساوي'], [:NUMBER, 3]],
+      assert_equal [[:NUMBER, 5], [:GREATER, Lexer::GREATER], [:THAN, Lexer::THAN], [:OR, Lexer::OR], [:EQUALS, Lexer::EQUALS], [:NUMBER, 3]],
                    Zaid::Lexer.new.tokenize('٥ أكبر من أو يساوي ٣', run_compression: false)
 
-      assert_equal [[:NUMBER, 5], [:LESS, 'أصغر'], [:THAN, 'من'], [:OR, 'أو'], [:EQUALS, 'يساوي'], [:NUMBER, 3]],
+      assert_equal [[:NUMBER, 5], [:LESS, Lexer::LESS], [:THAN, Lexer::THAN], [:OR, Lexer::OR], [:EQUALS, Lexer::EQUALS], [:NUMBER, 3]],
                    Zaid::Lexer.new.tokenize('٥ أصغر من أو يساوي ٣', run_compression: false)
     end
 
@@ -106,13 +106,13 @@ module Zaid
       CODE
 
       tokens = [
-        [:IF, 'إذا'],
-        [:WAS, 'كان'],
+        [:IF, Lexer::IF],
+        [:WAS, Lexer::WAS],
         [:NUMBER, 5],
-        [:GREATER, 'أكبر'],
-        [:THAN, 'من'],
+        [:GREATER, Lexer::GREATER],
+        [:THAN, Lexer::THAN],
         [:NUMBER, 3],
-        [:THEN, 'إذن'],
+        [:THEN, Lexer::THEN],
         [:INDENT, 2],
         [:IDENTIFIER, 'اطبع'],
         ['(', '('],
@@ -133,20 +133,20 @@ module Zaid
       CODE
 
       tokens = [
-        [:IF, 'إذا'],
-        [:WAS, 'كان'],
+        [:IF, Lexer::IF],
+        [:WAS, Lexer::WAS],
         [:NUMBER, 5],
-        [:GREATER, 'أكبر'],
-        [:THAN, 'من'],
+        [:GREATER, Lexer::GREATER],
+        [:THAN, Lexer::THAN],
         [:NUMBER, 3],
-        [:THEN, 'إذن'],
+        [:THEN, Lexer::THEN],
         [:INDENT, 2],
         [:IDENTIFIER, 'اطبع'],
         ['(', '('],
         [:STRING, '٥ أكبر من ٣'],
         [')', ')'],
         [:DEDENT, 0],
-        [:ELSE, 'وإلا'],
+        [:ELSE, Lexer::ELSE],
         [:INDENT, 2],
         [:IDENTIFIER, 'اطبع'],
         ['(', '('],
@@ -171,13 +171,13 @@ module Zaid
         ['=', '='],
         [:NUMBER, 5],
         [:NEWLINE, "\n"],
-        [:WHILE, 'طالما'],
-        [:WAS, 'كان'],
+        [:WHILE, Lexer::WHILE],
+        [:WAS, Lexer::WAS],
         [:IDENTIFIER, 'عدد'],
-        [:GREATER, 'أكبر'],
-        [:THAN, 'من'],
+        [:GREATER, Lexer::GREATER],
+        [:THAN, Lexer::THAN],
         [:NUMBER, 0],
-        [:THEN, 'إذن'],
+        [:THEN, Lexer::THEN],
         [:INDENT, 2],
         [:IDENTIFIER, 'اطبع'],
         ['(', '('],
@@ -202,15 +202,15 @@ module Zaid
       CODE
 
       tokens = [
-        [:METHOD, 'دالة'],
+        [:METHOD, Lexer::METHOD],
         [:IDENTIFIER, 'جمع_٣_أعداد'],
-        [:RECEIVE, 'تستقبل'],
+        [:RECEIVE, Lexer::RECEIVE],
         [:IDENTIFIER, 'العدد_الأول'],
-        [:AND, 'و'],
+        [:AND, Lexer::AND],
         [:IDENTIFIER, 'العدد_الثاني'],
-        [:AND, 'و'],
+        [:AND, Lexer::AND],
         [:IDENTIFIER, 'العدد_الثالث'],
-        [:IT_IS, 'وهي'],
+        [:IT_IS, Lexer::IT_IS],
         [:INDENT, 2],
         [:IDENTIFIER, 'العدد_الأول'],
         ['+', '+'],
@@ -231,13 +231,13 @@ module Zaid
       CODE
 
       tokens = [
-        [:CLASS, 'نوع'],
+        [:CLASS, Lexer::CLASS],
         [:CONSTANT, 'الحيوانات'],
-        [:IS, 'هو'],
+        [:IS, Lexer::IS],
         [:INDENT, 2],
-        [:METHOD, 'دالة'],
+        [:METHOD, Lexer::METHOD],
         [:IDENTIFIER, 'المشي'],
-        [:IT_IS, 'وهي'],
+        [:IT_IS, Lexer::IT_IS],
         [:INDENT, 4],
         [:IDENTIFIER, 'اطبع'],
         ['(', '('],
@@ -297,20 +297,20 @@ module Zaid
 
     def test_compress_if
       tokens = [
-        [:IF, 'إذا'],
-        [:WAS, 'كان'],
+        [:IF, Lexer::IF],
+        [:WAS, Lexer::WAS],
         [:NUMBER, 5],
-        [:GREATER, 'أكبر'],
-        [:THAN, 'من'],
+        [:GREATER, Lexer::GREATER],
+        [:THAN, Lexer::THAN],
         [:NUMBER, 3],
-        [:THEN, 'إذن'],
+        [:THEN, Lexer::THEN],
         [:INDENT, 2],
         [:IDENTIFIER, 'اطبع'],
         ['(', '('],
         [:STRING, '٥ أكبر من ٣'],
         [')', ')'],
         [:DEDENT, 0],
-        [:ELSE, 'وإلا'],
+        [:ELSE, Lexer::ELSE],
         [:INDENT, 2],
         [:IDENTIFIER, 'اطبع'],
         ['(', '('],
@@ -320,18 +320,18 @@ module Zaid
       ]
 
       compressed = [
-        [:IF, 'إذا كان'],
+        [:IF, "#{Lexer::IF} #{Lexer::WAS}"],
         [:NUMBER, 5],
         ['>', '>'],
         [:NUMBER, 3],
-        [:THEN, 'إذن'],
+        [:THEN, Lexer::THEN],
         [:INDENT, 2],
         [:IDENTIFIER, 'اطبع'],
         ['(', '('],
         [:STRING, '٥ أكبر من ٣'],
         [')', ')'],
         [:DEDENT, 0],
-        [:ELSE, 'وإلا'],
+        [:ELSE, Lexer::ELSE],
         [:INDENT, 2],
         [:IDENTIFIER, 'اطبع'],
         ['(', '('],
@@ -349,13 +349,13 @@ module Zaid
         ['=', '='],
         [:NUMBER, 5],
         [:NEWLINE, "\n"],
-        [:WHILE, 'طالما'],
-        [:WAS, 'كان'],
+        [:WHILE, Lexer::WHILE],
+        [:WAS, Lexer::WAS],
         [:IDENTIFIER, 'عدد'],
-        [:GREATER, 'أكبر'],
-        [:THAN, 'من'],
+        [:GREATER, Lexer::GREATER],
+        [:THAN, Lexer::THAN],
         [:NUMBER, 0],
-        [:THEN, 'إذن'],
+        [:THEN, Lexer::THEN],
         [:INDENT, 2],
         [:IDENTIFIER, 'اطبع'],
         ['(', '('],
@@ -375,11 +375,11 @@ module Zaid
         ['=', '='],
         [:NUMBER, 5],
         [:NEWLINE, "\n"],
-        [:WHILE, 'طالما كان'],
+        [:WHILE, "#{Lexer::WHILE} #{Lexer::WAS}"],
         [:IDENTIFIER, 'عدد'],
         ['>', '>'],
         [:NUMBER, 0],
-        [:THEN, 'إذن'],
+        [:THEN, Lexer::THEN],
         [:INDENT, 2],
         [:IDENTIFIER, 'اطبع'],
         ['(', '('],
@@ -400,8 +400,8 @@ module Zaid
     def test_compress_greater_than
       tokens = [
         [:NUMBER, 5],
-        [:GREATER, 'أكبر'],
-        [:THAN, 'من'],
+        [:GREATER, Lexer::GREATER],
+        [:THAN, Lexer::THAN],
         [:NUMBER, 3]
       ]
 
@@ -417,10 +417,10 @@ module Zaid
     def test_compress_greater_than_or_equals
       tokens = [
         [:NUMBER, 5],
-        [:GREATER, 'أكبر'],
-        [:THAN, 'من'],
-        [:OR, 'أو'],
-        [:EQUALS, 'يساوي'],
+        [:GREATER, Lexer::GREATER],
+        [:THAN, Lexer::THAN],
+        [:OR, Lexer::OR],
+        [:EQUALS, Lexer::EQUALS],
         [:NUMBER, 3]
       ]
 
@@ -436,8 +436,8 @@ module Zaid
     def test_compress_less_than
       tokens = [
         [:NUMBER, 5],
-        [:LESS, 'أصغر'],
-        [:THAN, 'من'],
+        [:LESS, Lexer::LESS],
+        [:THAN, Lexer::THAN],
         [:NUMBER, 3]
       ]
 
@@ -453,10 +453,10 @@ module Zaid
     def test_compress_less_than_or_equals
       tokens = [
         [:NUMBER, 5],
-        [:LESS, 'أصغر'],
-        [:THAN, 'من'],
-        [:OR, 'أو'],
-        [:EQUALS, 'يساوي'],
+        [:LESS, Lexer::LESS],
+        [:THAN, Lexer::THAN],
+        [:OR, Lexer::OR],
+        [:EQUALS, Lexer::EQUALS],
         [:NUMBER, 3]
       ]
 
@@ -472,7 +472,7 @@ module Zaid
     def test_compress_equals
       tokens = [
         [:NUMBER, 5],
-        [:EQUALS, 'يساوي'],
+        [:EQUALS, Lexer::EQUALS],
         [:NUMBER, 3]
       ]
 
@@ -488,8 +488,8 @@ module Zaid
     def test_compress_not_equals
       tokens = [
         [:NUMBER, 5],
-        [:NOT, 'لا'],
-        [:EQUALS, 'يساوي'],
+        [:NOT, Lexer::NOT],
+        [:EQUALS, Lexer::EQUALS],
         [:NUMBER, 3]
       ]
 
@@ -504,15 +504,15 @@ module Zaid
 
     def test_compress_or
       tokens = [
-        [:TRUE, 'صحيح'],
-        [:OR, 'أو'],
-        [:FALSE, 'خاطئ']
+        [:TRUE, Lexer::TRUE],
+        [:OR, Lexer::OR],
+        [:FALSE, Lexer::FALSE]
       ]
 
       compressed = [
-        [:TRUE, 'صحيح'],
+        [:TRUE, Lexer::TRUE],
         ['||', '||'],
-        [:FALSE, 'خاطئ']
+        [:FALSE, Lexer::FALSE]
       ]
 
       assert_equal compressed, Zaid::Lexer.new.compress(tokens)
@@ -520,15 +520,15 @@ module Zaid
 
     def test_compress_and
       tokens = [
-        [:TRUE, 'صحيح'],
-        [:AND, 'و'],
-        [:FALSE, 'خاطئ']
+        [:TRUE, Lexer::TRUE],
+        [:AND, Lexer::AND],
+        [:FALSE, Lexer::FALSE]
       ]
 
       compressed = [
-        [:TRUE, 'صحيح'],
+        [:TRUE, Lexer::TRUE],
         ['&&', '&&'],
-        [:FALSE, 'خاطئ']
+        [:FALSE, Lexer::FALSE]
       ]
 
       assert_equal compressed, Zaid::Lexer.new.compress(tokens)
@@ -536,13 +536,13 @@ module Zaid
 
     def test_compress_and_between_receive_and_then
       tokens = [
-        [:METHOD, 'دالة'],
+        [:METHOD, Lexer::METHOD],
         [:IDENTIFIER, 'تجربة'],
-        [:RECEIVE, 'تستقبل'],
+        [:RECEIVE, Lexer::RECEIVE],
         [:IDENTIFIER, 'المتغير_الأول'],
-        [:AND, 'و'],
+        [:AND, Lexer::AND],
         [:IDENTIFIER, 'المتغير_الثاني'],
-        [:THEN, 'إذن']
+        [:THEN, Lexer::THEN]
       ]
 
       assert_equal tokens, Zaid::Lexer.new.compress(tokens)

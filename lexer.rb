@@ -86,27 +86,27 @@ module Zaid
       compression_position = 0
       while compression_position < tokens.length
         case tokens[compression_position]
-        when [:RECEIVE, 'تستقبل'], [:THEN, 'إذن']
+        when [:RECEIVE, RECEIVE], [:THEN, THEN]
           between_receive_and_then = !between_receive_and_then
 
           compressed << tokens[compression_position]
 
           compression_position += 1
-        when [:IF, 'إذا']
+        when [:IF, IF]
           compression_position += compress_if(tokens, compressed, compression_position)
-        when [:WHILE, 'طالما']
+        when [:WHILE, WHILE]
           compression_position += compress_while(tokens, compressed, compression_position)
-        when [:GREATER, 'أكبر']
+        when [:GREATER, GREATER]
           compression_position += compress_greater_than_or_equals(tokens, compressed, compression_position)
-        when [:LESS, 'أصغر']
+        when [:LESS, LESS]
           compression_position += compress_less_than_or_equals(tokens, compressed, compression_position)
-        when [:EQUALS, 'يساوي']
+        when [:EQUALS, EQUALS]
           compression_position += compress_equals(compressed)
-        when [:NOT, 'لا']
+        when [:NOT, NOT]
           compression_position += compress_not_equals(tokens, compressed, compression_position)
-        when [:OR, 'أو']
+        when [:OR, OR]
           compression_position += compress_or(compressed)
-        when [:AND, 'و']
+        when [:AND, AND]
           compression_position += compress_and(tokens, compressed, compression_position, between_receive_and_then)
         else
           compressed << tokens[compression_position]
@@ -147,7 +147,7 @@ module Zaid
     def parse_identifier(identifier, tokens, _)
       tokens << if KEYWORDS_MAPPING.keys.include?(identifier)
                   [KEYWORDS_MAPPING[identifier], identifier]
-                elsif tokens[tokens.length - 1] == [:CLASS, 'نوع']
+                elsif tokens[tokens.length - 1] == [:CLASS, CLASS]
                   [:CONSTANT, identifier]
                 else
                   [:IDENTIFIER, identifier]
@@ -218,10 +218,10 @@ module Zaid
 
     # Compression.
 
-    # Comverts [[:IF, 'إذا'], [:WAS, 'كان']] to [:IF, 'إذا كان'].
+    # Comverts [[:IF, IF], [:WAS, WAS]] to [:IF, "#{IF} #{WAS}"].
     def compress_if(tokens, compressed, compression_position)
-      if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:WAS, 'كان']
-        compressed << [:IF, 'إذا كان']
+      if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:WAS, WAS]
+        compressed << [:IF, "#{IF} #{WAS}"]
 
         2
       else
@@ -231,10 +231,10 @@ module Zaid
       end
     end
 
-    # Comverts [[:WHILE, 'طالما'], [:WAS, 'كان']] to [:WHILE, 'طالما كان'].
+    # Comverts [[:WHILE, WHILE], [:WAS, WAS]] to [:WHILE, "#{WHILE} #{WAS}"].
     def compress_while(tokens, compressed, compression_position)
-      if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:WAS, 'كان']
-        compressed << [:WHILE, 'طالما كان']
+      if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:WAS, WAS]
+        compressed << [:WHILE, "#{WHILE} #{WAS}"]
 
         2
       else
@@ -245,12 +245,12 @@ module Zaid
     end
 
     # Converts:
-    #   [[:GREATER, 'أكبر'], [:THAN, 'من'], [:OR, 'أو'], [:EQUALS, 'يساوي']] to ['>=', '>=']
-    #   [[:GREATER, 'أكبر'], [:THAN, 'من']] to ['>', '>']
+    #   [[:GREATER, GREATER], [:THAN, THAN], [:OR, OR], [:EQUALS, EQUALS]] to ['>=', '>=']
+    #   [[:GREATER, GREATER], [:THAN, THAN]] to ['>', '>']
     def compress_greater_than_or_equals(tokens, compressed, compression_position)
-      if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:THAN, 'من']
+      if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:THAN, THAN]
         if compression_position + 3 < tokens.length &&
-           tokens[compression_position + 2] == [:OR, 'أو'] && tokens[compression_position + 3] == [:EQUALS, 'يساوي']
+           tokens[compression_position + 2] == [:OR, OR] && tokens[compression_position + 3] == [:EQUALS, EQUALS]
           compressed << ['>=', '>=']
 
           4
@@ -267,12 +267,12 @@ module Zaid
     end
 
     # Converts:
-    #   [[:LESS, 'أصغر'], [:THAN, 'من'], [:OR, 'أو'], [:EQUALS, 'يساوي']] to ['<=', '<=']
-    #   [[:LESS, 'أصغر'], [:THAN, 'من']] to ['<', '<']
+    #   [[:LESS, LESS], [:THAN, THAN], [:OR, OR], [:EQUALS, EQUALS]] to ['<=', '<=']
+    #   [[:LESS, LESS], [:THAN, THAN]] to ['<', '<']
     def compress_less_than_or_equals(tokens, compressed, compression_position)
-      if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:THAN, 'من']
+      if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:THAN, THAN]
         if compression_position + 3 < tokens.length &&
-           tokens[compression_position + 2] == [:OR, 'أو'] && tokens[compression_position + 3] == [:EQUALS, 'يساوي']
+           tokens[compression_position + 2] == [:OR, OR] && tokens[compression_position + 3] == [:EQUALS, EQUALS]
           compressed << ['<=', '<=']
 
           4
@@ -288,16 +288,16 @@ module Zaid
       end
     end
 
-    # Converts [[:EQUALS, 'يساوي']] to ['==', '=='].
+    # Converts [[:EQUALS, EQUALS]] to ['==', '=='].
     def compress_equals(compressed)
       compressed << ['==', '==']
 
       1
     end
 
-    # Converts [[:NOT, 'لا'], [:EQUALS, 'يساوي']] to ['!=', '!='].
+    # Converts [[:NOT, NOT], [:EQUALS, EQUALS]] to ['!=', '!='].
     def compress_not_equals(tokens, compressed, compression_position)
-      if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:EQUALS, 'يساوي']
+      if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:EQUALS, EQUALS]
         compressed << ['!=', '!=']
 
         2
@@ -308,14 +308,14 @@ module Zaid
       end
     end
 
-    # Converts [[:OR, 'أو']] to ['||', '||'].
+    # Converts [[:OR, OR]] to ['||', '||'].
     def compress_or(compressed)
       compressed << ['||', '||']
 
       1
     end
 
-    # Converts [[:AND, 'و']] to ['&&', '&&'], except between [:RECEIVE, 'تستقبل'] and [:THEN, 'إذن'] tokens.
+    # Converts [[:AND, AND]] to ['&&', '&&'], except between [:RECEIVE, RECEIVE] and [:THEN, THEN] tokens.
     def compress_and(tokens, compressed, compression_position, between_receive_and_then)
       compressed << if between_receive_and_then
                       tokens[compression_position]
