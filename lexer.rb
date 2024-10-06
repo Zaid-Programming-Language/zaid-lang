@@ -46,6 +46,7 @@ module Zaid
       EQUALS => :EQUALS
     }.freeze
 
+    COMMENT_PREFIXES = ['#', 'تعليق:', 'ملاحظة:', 'سؤال:'].freeze
     INDENT_KEYWORDS = [THEN, IS, ELSE, IT_IS].freeze
     ARABIC_CHARACTERS = 'ابتةثجحخدذرزسشصضطظعغفقكلمنهوىيءآأؤإئ'
     ARABIC_DIGITS = '٠١٢٣٤٥٦٧٨٩'
@@ -53,7 +54,7 @@ module Zaid
     DIGITS = [ARABIC_DIGITS, ENGLISH_DIGITS].join
 
     TOKEN_PATTERNS = [
-      { pattern: /\G(#.*$)/, type: :comment },
+      { pattern: /\G((#{Regexp.union(COMMENT_PREFIXES)}).*$)/, type: :comment },
       { pattern: /\G([#{ARABIC_CHARACTERS}_ـ][#{ARABIC_CHARACTERS}#{DIGITS}_ـ]*)/, type: :identifier },
       { pattern: /\G([#{DIGITS}]+\.[#{DIGITS}]+)/, type: :float },
       { pattern: /\G([#{DIGITS}]+)/, type: :number },
