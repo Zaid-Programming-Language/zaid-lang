@@ -2,7 +2,7 @@
 
 require 'minitest/autorun'
 
-require_relative '../lexer'
+require 'lexer'
 
 module Zaid
   class LexerCompressionTest < Minitest::Test
