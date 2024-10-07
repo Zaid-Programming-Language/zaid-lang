@@ -13,9 +13,7 @@ module Zaid
     end
 
     def tokenize(code, run_compression: true)
-      tokens = @tokenizer.tokenize(code, run_compression:)
-      tokens = @compressor.compress(tokens) if run_compression
-      tokens
+      @tokenizer.tokenize(code, run_compression:)
     end
 
     def compress(tokens)
