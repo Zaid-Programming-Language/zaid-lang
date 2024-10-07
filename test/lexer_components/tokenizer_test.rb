@@ -17,6 +17,70 @@ module Zaid
         end
       end
 
+      def test_newlines
+        code = <<~CODE
+
+          # هذا تعليق في بداية البرنامج
+
+          عدد = ٥
+
+          طالما كان عدد أكبر من ٠ إذن
+            اطبع(عدد)
+            عدد = عدد - ١
+
+          تعليق: هذا تعليق في وسط البرنامج
+          ملاحظة: هذه ملاحظة
+          اطبع(عدد)
+          سؤال: أخيرا، هذا سؤال في نهاية البرنامج
+
+        CODE
+
+        tokens = [
+          [:NEWLINE, "\n"],
+          [:COMMENT, '# هذا تعليق في بداية البرنامج'],
+          [:NEWLINE, "\n"],
+          [:NEWLINE, "\n"],
+          [:IDENTIFIER, 'عدد'],
+          ['=', '='],
+          [:NUMBER, 5],
+          [:NEWLINE, "\n"],
+          [:NEWLINE, "\n"],
+          [:WHILE, WHILE],
+          [:WAS, WAS],
+          [:IDENTIFIER, 'عدد'],
+          [:GREATER, GREATER],
+          [:THAN, THAN],
+          [:NUMBER, 0],
+          [:THEN, THEN],
+          [:INDENT, 2],
+          [:IDENTIFIER, 'اطبع'],
+          ['(', '('],
+          [:IDENTIFIER, 'عدد'],
+          [')', ')'],
+          [:NEWLINE, "\n"],
+          [:IDENTIFIER, 'عدد'],
+          ['=', '='],
+          [:IDENTIFIER, 'عدد'],
+          ['-', '-'],
+          [:NUMBER, 1],
+          [:DEDENT, 0],
+          [:NEWLINE, "\n"],
+          [:COMMENT, 'تعليق: هذا تعليق في وسط البرنامج'],
+          [:NEWLINE, "\n"],
+          [:COMMENT, 'ملاحظة: هذه ملاحظة'],
+          [:NEWLINE, "\n"],
+          [:IDENTIFIER, 'اطبع'],
+          ['(', '('],
+          [:IDENTIFIER, 'عدد'],
+          [')', ')'],
+          [:NEWLINE, "\n"],
+          [:COMMENT, 'سؤال: أخيرا، هذا سؤال في نهاية البرنامج'],
+          [:NEWLINE, "\n"]
+        ]
+
+        assert_equal tokens, @tokenizer.tokenize(code)
+      end
+
       def test_comment
         code = <<~CODE
           # هذا تعليق في بداية البرنامج
