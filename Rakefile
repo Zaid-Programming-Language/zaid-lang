@@ -26,4 +26,20 @@ task :generate_parser do
   File.write('lib/parser.rb', modified_content)
 end
 
+desc 'Run benchmark'
+task :benchmark do
+  require 'benchmark/ips'
+
+  require './lib/parser'
+
+  code = File.read('syntax.zaid')
+  parser = Zaid::Parser.new
+
+  Benchmark.ips do |x|
+    x.report('Parser#parse') do
+      parser.parse(code)
+    end
+  end
+end
+
 task default: :test
