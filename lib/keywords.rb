@@ -7,7 +7,7 @@ module Zaid
     GREATER = 'أكبر'
     PLUS    = 'زائد'
     TIMES   = 'ضرب'
-    DIVIDE  = 'قسمة'
+    DIVIDE  = 'تقسيم'
     WAS     = 'كان'
     NOT     = 'لا'
     THAN    = 'من'

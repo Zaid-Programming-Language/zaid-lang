@@ -183,7 +183,7 @@ module Zaid
         assert_equal [[:PLUS, PLUS]], @tokenizer.tokenize('زائد')
         assert_equal [[:MINUS, MINUS]], @tokenizer.tokenize('ناقص')
         assert_equal [[:TIMES, TIMES]], @tokenizer.tokenize('ضرب')
-        assert_equal [[:DIVIDE, DIVIDE]], @tokenizer.tokenize('قسمة')
+        assert_equal [[:DIVIDE, DIVIDE]], @tokenizer.tokenize('تقسيم')
       end
 
       def test_if_statement
