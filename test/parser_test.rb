@@ -12,6 +12,13 @@ module Zaid
       @parser = Parser.new
     end
 
+    def test_comments
+      assert_equal NodeList.new([]), @parser.parse('# لغة زيد')
+      assert_equal NodeList.new([]), @parser.parse('تعليق: لغة زيد')
+      assert_equal NodeList.new([]), @parser.parse('ملاحظة: صنِعت هذه اللغة لأغراض تعليمية')
+      assert_equal NodeList.new([]), @parser.parse('سؤال: هل هذه اللغة سهلة؟')
+    end
+
     def test_number_node
       assert_equal NodeList.new([NumberNode.new(5)]), @parser.parse('٥')
     end
