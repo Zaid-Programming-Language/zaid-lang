@@ -42,6 +42,8 @@ module Zaid
             compression_position += compress_or(compressed)
           when [:AND, AND]
             compression_position += compress_and(tokens, compressed, compression_position, between_receive_and_then)
+          when [:PLUS, PLUS], [:MINUS, MINUS], [:TIMES, TIMES], [:DIVIDE, DIVIDE]
+            compression_position += compress_arabic_arithmetic_operator(tokens[compression_position], compressed)
           else
             compressed << tokens[compression_position]
 
@@ -124,7 +126,7 @@ module Zaid
         end
       end
 
-      # Converts [[:EQUALS, EQUALS]] to ['==', '=='].
+      # Converts [:EQUALS, EQUALS] to ['==', '=='].
       def compress_equals(compressed)
         compressed << ['==', '==']
 
@@ -144,20 +146,40 @@ module Zaid
         end
       end
 
-      # Converts [[:OR, OR]] to ['||', '||'].
+      # Converts [:OR, OR] to ['||', '||'].
       def compress_or(compressed)
         compressed << ['||', '||']
 
         1
       end
 
-      # Converts [[:AND, AND]] to ['&&', '&&'], except between [:RECEIVE, RECEIVE] and [:THEN, THEN] tokens.
+      # Converts [:AND, AND] to ['&&', '&&'], except between [:RECEIVE, RECEIVE] and [:THEN, THEN] tokens.
       def compress_and(tokens, compressed, compression_position, between_receive_and_then)
         compressed << if between_receive_and_then
                         tokens[compression_position]
                       else
                         ['&&', '&&']
                       end
+
+        1
+      end
+
+      # Converts:
+      #   [:PLUS, PLUS] to ['+', '+']
+      #   [:MINUS, MINUS] to ['-', '-']
+      #   [:TIMES, TIMES] to ['*', '*']
+      #   [:DIVIDE, DIVIDE] to ['/', '/']
+      def compress_arabic_arithmetic_operator(token, compressed)
+        case token
+        when [:PLUS, PLUS]
+          compressed << ['+', '+']
+        when [:MINUS, MINUS]
+          compressed << ['-', '-']
+        when [:TIMES, TIMES]
+          compressed << ['*', '*']
+        when [:DIVIDE, DIVIDE]
+          compressed << ['/', '/']
+        end
 
         1
       end
