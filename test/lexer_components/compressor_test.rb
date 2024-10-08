@@ -265,6 +265,24 @@ module Zaid
 
         assert_equal tokens, @compressor.compress(tokens)
       end
+
+      def test_compress_arabic_arithmetic_operator
+        tokens = [
+          [:PLUS, PLUS],
+          [:MINUS, MINUS],
+          [:TIMES, TIMES],
+          [:DIVIDE, DIVIDE]
+        ]
+
+        compressed = [
+          ['+', '+'],
+          ['-', '-'],
+          ['*', '*'],
+          ['/', '/']
+        ]
+
+        assert_equal compressed, @compressor.compress(tokens)
+      end
     end
   end
 end

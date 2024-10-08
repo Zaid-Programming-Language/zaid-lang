@@ -117,14 +117,14 @@ module Zaid
         assert_equal [[:IDENTIFIER, 'عدد']], @tokenizer.tokenize('عدد')
       end
 
-      def test_float
-        assert_equal [[:FLOAT, 3.14]], @tokenizer.tokenize('٣.١٤')
-        assert_equal [[:FLOAT, 3.14]], @tokenizer.tokenize('3.14')
-      end
-
       def test_number
         assert_equal [[:NUMBER, 314]], @tokenizer.tokenize('٣١٤')
         assert_equal [[:NUMBER, 314]], @tokenizer.tokenize('314')
+      end
+
+      def test_float
+        assert_equal [[:FLOAT, 3.14]], @tokenizer.tokenize('٣.١٤')
+        assert_equal [[:FLOAT, 3.14]], @tokenizer.tokenize('3.14')
       end
 
       def test_mixed_digits
@@ -177,6 +177,13 @@ module Zaid
         assert_equal [['/', '/']], @tokenizer.tokenize('/')
         assert_equal [['(', '(']], @tokenizer.tokenize('(')
         assert_equal [[')', ')']], @tokenizer.tokenize(')')
+      end
+
+      def test_arabic_arithmetic_operator
+        assert_equal [[:PLUS, PLUS]], @tokenizer.tokenize('زائد')
+        assert_equal [[:MINUS, MINUS]], @tokenizer.tokenize('ناقص')
+        assert_equal [[:TIMES, TIMES]], @tokenizer.tokenize('ضرب')
+        assert_equal [[:DIVIDE, DIVIDE]], @tokenizer.tokenize('قسمة')
       end
 
       def test_if_statement
