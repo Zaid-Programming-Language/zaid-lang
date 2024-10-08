@@ -9,26 +9,30 @@ module Zaid
       include Keywords
 
       KEYWORDS_MAPPING = {
-        LESS => :LESS,
-        GREATER => :GREATER,
-        OR => :OR,
-        IF => :IF,
-        THEN => :THEN,
-        RECEIVE => :RECEIVE,
-        FALSE => :FALSE,
-        METHOD => :METHOD,
-        TRUE => :TRUE,
-        WHILE => :WHILE,
-        WAS => :WAS,
-        NOT => :NOT,
-        NIL => :NIL,
-        THAN => :THAN,
-        CLASS => :CLASS,
-        IS => :IS,
         AND => :AND,
+        CLASS => :CLASS,
+        DIVIDE => :DIVIDE,
         ELSE => :ELSE,
+        EQUALS => :EQUALS,
+        FALSE => :FALSE,
+        GREATER => :GREATER,
+        IF => :IF,
+        IS => :IS,
         IT_IS => :IT_IS,
-        EQUALS => :EQUALS
+        LESS => :LESS,
+        METHOD => :METHOD,
+        MINUS => :MINUS,
+        NIL => :NIL,
+        NOT => :NOT,
+        OR => :OR,
+        PLUS => :PLUS,
+        RECEIVE => :RECEIVE,
+        THAN => :THAN,
+        THEN => :THEN,
+        TIMES => :TIMES,
+        TRUE => :TRUE,
+        WAS => :WAS,
+        WHILE => :WHILE
       }.freeze
 
       COMMENT_PREFIXES = ['#', 'تعليق:', 'ملاحظة:', 'سؤال:'].freeze
@@ -40,7 +44,7 @@ module Zaid
 
       TOKEN_PATTERNS = [
         { pattern: /\G((#{Regexp.union(COMMENT_PREFIXES)}).*$)/, type: :comment },
-        { pattern: /\G([#{ARABIC_CHARACTERS}_ـ][#{ARABIC_CHARACTERS}#{DIGITS}_ـ]*)/, type: :identifier },
+        { pattern: /\G([#{ARABIC_CHARACTERS}_ـ][#{ARABIC_CHARACTERS}#{DIGITS}_ـ?؟]*)/, type: :identifier },
         { pattern: /\G([#{DIGITS}]+\.[#{DIGITS}]+)/, type: :float },
         { pattern: /\G([#{DIGITS}]+)/, type: :number },
         { pattern: /\G"([^"]*)"/, type: :string },
