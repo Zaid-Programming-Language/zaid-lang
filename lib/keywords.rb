@@ -2,8 +2,19 @@
 
 module Zaid
   module Keywords
+    # Compressable keywords:
     LESS    = 'أصغر'
     GREATER = 'أكبر'
+    PLUS    = 'زائد'
+    TIMES   = 'ضرب'
+    DIVIDE  = 'قسمة'
+    WAS     = 'كان'
+    NOT     = 'لا'
+    THAN    = 'من'
+    MINUS   = 'ناقص'
+    EQUALS  = 'يساوي'
+
+    # Uncompressable keywords:
     OR      = 'أو'
     IF      = 'إذا'
     THEN    = 'إذن'
@@ -12,15 +23,13 @@ module Zaid
     METHOD  = 'دالة'
     TRUE    = 'صحيح'
     WHILE   = 'طالما'
-    WAS     = 'كان'
-    NOT     = 'لا'
     NIL     = 'مجهول'
-    THAN    = 'من'
     CLASS   = 'نوع'
     IS      = 'هو'
-    AND     = 'و'
     ELSE    = 'وإلا'
     IT_IS   = 'وهي'
-    EQUALS  = 'يساوي'
+
+    # Semi-compressable keywords:
+    AND     = 'و'
   end
 end
