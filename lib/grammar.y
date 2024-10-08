@@ -1,6 +1,7 @@
 class Parser
   token AND
   token CLASS
+  token COMMENT
   token CONSTANT
   token DEDENT
   token ELSE
@@ -173,5 +174,9 @@ end
   end
 
   def next_token
-    @tokens.shift
+    token = @tokens.shift
+
+    return token unless token && token[0] == :COMMENT
+
+    next_token
   end
