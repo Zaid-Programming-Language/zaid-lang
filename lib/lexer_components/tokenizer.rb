@@ -44,7 +44,7 @@ module Zaid
 
       TOKEN_PATTERNS = [
         { pattern: /\G((#{Regexp.union(COMMENT_PREFIXES)}).*$)/, type: :comment },
-        { pattern: /\G([#{ARABIC_CHARACTERS}_ـ][#{ARABIC_CHARACTERS}#{DIGITS}_ـ؟]*)/, type: :identifier },
+        { pattern: /\G([#{ARABIC_CHARACTERS}_ـ][#{ARABIC_CHARACTERS}#{DIGITS}_ـ]*؟?)/, type: :identifier },
         { pattern: /\G([#{DIGITS}]+\.[#{DIGITS}]+)/, type: :float },
         { pattern: /\G([#{DIGITS}]+)/, type: :number },
         { pattern: /\G"([^"]*)"/, type: :string },
@@ -96,9 +96,13 @@ module Zaid
       end
 
       def parse_identifier(identifier, tokens, _)
+        if identifier.end_with?('؟') && (tokens.empty? || ![[:METHOD, METHOD], ['.', '.']].include?(tokens.last))
+          raise 'خطأ: لا يمكن استخدام "؟" في اسم المعرف إلا بعد كلمة "دالة" أو بعد نقطة.'
+        end
+
         tokens << if KEYWORDS_MAPPING.keys.include?(identifier)
                     [KEYWORDS_MAPPING[identifier], identifier]
-                  elsif tokens[tokens.length - 1] == [:CLASS, CLASS]
+                  elsif tokens.last == [:CLASS, CLASS]
                     [:CONSTANT, identifier]
                   else
                     [:IDENTIFIER, identifier]
