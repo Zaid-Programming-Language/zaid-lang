@@ -6,7 +6,7 @@ module Zaid
   module Nodes
     class NumberNode < LiteralNode
       def eval(_context)
-        Constants['العدد_الصحيح'].new_with_value(value)
+        Constants['عدد_صحيح'].new_with_value(value)
       end
     end
   end

@@ -6,7 +6,7 @@ module Zaid
   module Nodes
     class StringNode < LiteralNode
       def eval(_context)
-        Constants['النص'].new_with_value(value)
+        Constants['نص'].new_with_value(value)
       end
     end
   end

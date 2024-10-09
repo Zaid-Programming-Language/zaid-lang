@@ -10,7 +10,7 @@ module Zaid
       def initialize(superclass = nil)
         @runtime_methods = {}
         @runtime_superclass = superclass
-        @runtime_class = Constants['النوع']
+        @runtime_class = Constants['نوع']
       end
 
       def lookup(method_name)

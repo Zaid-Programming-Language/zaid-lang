@@ -7,7 +7,7 @@ module Zaid
         zaid_class = Constants[name]
 
         unless zaid_class
-          zaid_class = Runtime::ZaidClass.new(Constants['الشيء'])
+          zaid_class = Runtime::ZaidClass.new(Constants['شيء'])
           Constants[name] = zaid_class
         end
 

@@ -133,7 +133,7 @@ module Zaid
 
     def test_reopen_class
       code = <<~CODE
-        نوع العدد_الصحيح هو
+        نوع عدد_صحيح هو
           دالة تجربة وهي
             ٥
 

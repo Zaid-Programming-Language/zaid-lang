@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative './zaid_class'
 require_relative './context'
+require_relative './zaid_class'
 
 ARITHMETIC_OPERATIONS = %i[+ * - /].freeze
 COMPARISON_OPERATIONS = %i[> < >= <= == !=].freeze
@@ -32,38 +32,38 @@ end
 
 Constants = {}
 
-Constants['النوع'] = Zaid::Runtime::ZaidClass.new
-Constants['النوع'].runtime_class = Constants['النوع']
-Constants['الشيء'] = Zaid::Runtime::ZaidClass.new(Constants['النوع'])
-Constants['العدد_الصحيح'] = Zaid::Runtime::ZaidClass.new(Constants['الشيء'])
-Constants['العدد_العشري'] = Zaid::Runtime::ZaidClass.new(Constants['الشيء'])
-Constants['النص'] = Zaid::Runtime::ZaidClass.new(Constants['الشيء'])
+Constants['نوع'] = Zaid::Runtime::ZaidClass.new
+Constants['نوع'].runtime_class = Constants['نوع']
+Constants['شيء'] = Zaid::Runtime::ZaidClass.new(Constants['نوع'])
+Constants['عدد_صحيح'] = Zaid::Runtime::ZaidClass.new(Constants['شيء'])
+Constants['عدد_عشري'] = Zaid::Runtime::ZaidClass.new(Constants['شيء'])
+Constants['نص'] = Zaid::Runtime::ZaidClass.new(Constants['شيء'])
 
-root_self = Constants['الشيء'].new
+root_self = Constants['شيء'].new
 RootContext = Zaid::Runtime::Context.new(root_self)
 
-Constants['النوع_الصحيح'] = Zaid::Runtime::ZaidClass.new(Constants['الشيء'])
-Constants['النوع_الخاطئ'] = Zaid::Runtime::ZaidClass.new(Constants['الشيء'])
-Constants['النوع_المجهول'] = Zaid::Runtime::ZaidClass.new(Constants['الشيء'])
+Constants['نوع_صحيح'] = Zaid::Runtime::ZaidClass.new(Constants['شيء'])
+Constants['نوع_خاطئ'] = Zaid::Runtime::ZaidClass.new(Constants['شيء'])
+Constants['نوع_مجهول'] = Zaid::Runtime::ZaidClass.new(Constants['شيء'])
 
-Constants['صحيح'] = Constants['النوع_الصحيح'].new_with_value(true)
-Constants['خاطئ'] = Constants['النوع_الخاطئ'].new_with_value(false)
-Constants['مجهول'] = Constants['النوع_المجهول'].new_with_value(nil)
+Constants['صحيح'] = Constants['نوع_صحيح'].new_with_value(true)
+Constants['خاطئ'] = Constants['نوع_خاطئ'].new_with_value(false)
+Constants['مجهول'] = Constants['نوع_مجهول'].new_with_value(nil)
 
-Constants['النوع'].def :جديد do |receiver, _arguments|
+Constants['نوع'].def :جديد do |receiver, _arguments|
   receiver.new
 end
 
-Constants['الشيء'].def :اطبع do |_receiver, arguments|
+Constants['شيء'].def :اطبع do |_receiver, arguments|
   puts arguments.first.ruby_value
 
   Constants['مجهول']
 end
 
-define_arithmetic_operations('العدد_الصحيح', ARITHMETIC_OPERATIONS)
-define_arithmetic_operations('العدد_العشري', ARITHMETIC_OPERATIONS)
-define_arithmetic_operations('النص', ARITHMETIC_OPERATIONS[0..1])
+define_arithmetic_operations('عدد_صحيح', ARITHMETIC_OPERATIONS)
+define_arithmetic_operations('عدد_عشري', ARITHMETIC_OPERATIONS)
+define_arithmetic_operations('نص', ARITHMETIC_OPERATIONS[0..1])
 
-define_comparison_operations('العدد_الصحيح', COMPARISON_OPERATIONS)
-define_comparison_operations('العدد_العشري', COMPARISON_OPERATIONS)
-define_comparison_operations('النص', COMPARISON_OPERATIONS)
+define_comparison_operations('عدد_صحيح', COMPARISON_OPERATIONS)
+define_comparison_operations('عدد_عشري', COMPARISON_OPERATIONS)
+define_comparison_operations('نص', COMPARISON_OPERATIONS)
