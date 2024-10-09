@@ -96,6 +96,11 @@ module Zaid
       assert_equal true, @interpreter.eval('١ أكبر من أو يساوي ١').ruby_value
     end
 
+    def test_logical_operations
+      assert_equal true, @interpreter.eval('٥ > ٣ && ٥ > ٢')
+      assert_equal true, @interpreter.eval('٥ < ٣ || ٥ > ٢')
+    end
+
     def test_assign
       code = <<~CODE
         عدد = ٥
