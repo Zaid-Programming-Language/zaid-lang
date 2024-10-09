@@ -30,14 +30,17 @@ desc 'Run benchmark'
 task :benchmark do
   require 'benchmark/ips'
 
-  require './lib/parser'
+  require './lib/interpreter'
 
   code = File.read('syntax.zaid')
-  parser = Zaid::Parser.new
+  interpreter = Zaid::Interpreter.new
 
   Benchmark.ips do |x|
-    x.report('Parser#parse') do
-      parser.parse(code)
+    x.report('Interpreter#eval') do
+      original_stdout = $stdout
+      $stdout = File.open(File::NULL, 'w')
+      interpreter.eval(code)
+      $stdout = original_stdout
     end
   end
 end
