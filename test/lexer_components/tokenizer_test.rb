@@ -40,39 +40,21 @@ module Zaid
           [:COMMENT, '# هذا تعليق في بداية البرنامج'],
           [:NEWLINE, "\n"],
           [:NEWLINE, "\n"],
-          [:IDENTIFIER, 'عدد'],
-          ['=', '='],
-          [:NUMBER, 5],
+          [:IDENTIFIER, 'عدد'], ['=', '='], [:NUMBER, 5],
           [:NEWLINE, "\n"],
           [:NEWLINE, "\n"],
-          [:WHILE, WHILE],
-          [:WAS, WAS],
-          [:IDENTIFIER, 'عدد'],
-          [:GREATER, GREATER],
-          [:THAN, THAN],
-          [:NUMBER, 0],
-          [:THEN, THEN],
+          [:WHILE, WHILE], [:WAS, WAS], [:IDENTIFIER, 'عدد'], [:GREATER, GREATER], [:THAN, THAN], [:NUMBER, 0], [:THEN, THEN],
           [:INDENT, 2],
-          [:IDENTIFIER, 'اطبع'],
-          ['(', '('],
-          [:IDENTIFIER, 'عدد'],
-          [')', ')'],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:IDENTIFIER, 'عدد'], [')', ')'],
           [:NEWLINE, "\n"],
-          [:IDENTIFIER, 'عدد'],
-          ['=', '='],
-          [:IDENTIFIER, 'عدد'],
-          ['-', '-'],
-          [:NUMBER, 1],
+          [:IDENTIFIER, 'عدد'], ['=', '='], [:IDENTIFIER, 'عدد'], ['-', '-'], [:NUMBER, 1],
           [:DEDENT, 0],
           [:NEWLINE, "\n"],
           [:COMMENT, 'تعليق: هذا تعليق في وسط البرنامج'],
           [:NEWLINE, "\n"],
           [:COMMENT, 'ملاحظة: هذه ملاحظة'],
           [:NEWLINE, "\n"],
-          [:IDENTIFIER, 'اطبع'],
-          ['(', '('],
-          [:IDENTIFIER, 'عدد'],
-          [')', ')'],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:IDENTIFIER, 'عدد'], [')', ')'],
           [:NEWLINE, "\n"],
           [:COMMENT, 'سؤال: أخيرا، هذا سؤال في نهاية البرنامج'],
           [:NEWLINE, "\n"]
@@ -94,18 +76,13 @@ module Zaid
         tokens = [
           [:COMMENT, '# هذا تعليق في بداية البرنامج'],
           [:NEWLINE, "\n"],
-          [:IDENTIFIER, 'عدد'],
-          ['=', '='],
-          [:NUMBER, 5],
+          [:IDENTIFIER, 'عدد'], ['=', '='], [:NUMBER, 5],
           [:NEWLINE, "\n"],
           [:COMMENT, 'تعليق: هذا تعليق في وسط البرنامج'],
           [:NEWLINE, "\n"],
           [:COMMENT, 'ملاحظة: هذه ملاحظة'],
           [:NEWLINE, "\n"],
-          [:IDENTIFIER, 'اطبع'],
-          ['(', '('],
-          [:IDENTIFIER, 'عدد'],
-          [')', ')'],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:IDENTIFIER, 'عدد'], [')', ')'],
           [:NEWLINE, "\n"],
           [:COMMENT, 'سؤال: أخيرا، هذا سؤال في نهاية البرنامج']
         ]
@@ -193,18 +170,9 @@ module Zaid
         CODE
 
         tokens = [
-          [:IF, IF],
-          [:WAS, WAS],
-          [:NUMBER, 5],
-          [:GREATER, GREATER],
-          [:THAN, THAN],
-          [:NUMBER, 3],
-          [:THEN, THEN],
+          [:IF, IF], [:WAS, WAS], [:NUMBER, 5], [:GREATER, GREATER], [:THAN, THAN], [:NUMBER, 3], [:THEN, THEN],
           [:INDENT, 2],
-          [:IDENTIFIER, 'اطبع'],
-          ['(', '('],
-          [:STRING, '٥ أكبر من ٣'],
-          [')', ')'],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أكبر من ٣'], [')', ')'],
           [:DEDENT, 0]
         ]
 
@@ -220,25 +188,14 @@ module Zaid
         CODE
 
         tokens = [
-          [:IF, IF],
-          [:WAS, WAS],
-          [:NUMBER, 5],
-          [:GREATER, GREATER],
-          [:THAN, THAN],
-          [:NUMBER, 3],
-          [:THEN, THEN],
+          [:IF, IF], [:WAS, WAS], [:NUMBER, 5], [:GREATER, GREATER], [:THAN, THAN], [:NUMBER, 3], [:THEN, THEN],
           [:INDENT, 2],
           [:IDENTIFIER, 'اطبع'],
-          ['(', '('],
-          [:STRING, '٥ أكبر من ٣'],
-          [')', ')'],
+          ['(', '('], [:STRING, '٥ أكبر من ٣'], [')', ')'],
           [:DEDENT, 0],
           [:ELSE, ELSE],
           [:INDENT, 2],
-          [:IDENTIFIER, 'اطبع'],
-          ['(', '('],
-          [:STRING, '٥ أصغر من أو يساوي ٣'],
-          [')', ')'],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أصغر من أو يساوي ٣'], [')', ')'],
           [:DEDENT, 0]
         ]
 
@@ -254,28 +211,13 @@ module Zaid
         CODE
 
         tokens = [
-          [:IDENTIFIER, 'عدد'],
-          ['=', '='],
-          [:NUMBER, 5],
+          [:IDENTIFIER, 'عدد'], ['=', '='], [:NUMBER, 5],
           [:NEWLINE, "\n"],
-          [:WHILE, WHILE],
-          [:WAS, WAS],
-          [:IDENTIFIER, 'عدد'],
-          [:GREATER, GREATER],
-          [:THAN, THAN],
-          [:NUMBER, 0],
-          [:THEN, THEN],
+          [:WHILE, WHILE], [:WAS, WAS], [:IDENTIFIER, 'عدد'], [:GREATER, GREATER], [:THAN, THAN], [:NUMBER, 0], [:THEN, THEN],
           [:INDENT, 2],
-          [:IDENTIFIER, 'اطبع'],
-          ['(', '('],
-          [:IDENTIFIER, 'عدد'],
-          [')', ')'],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:IDENTIFIER, 'عدد'], [')', ')'],
           [:NEWLINE, "\n"],
-          [:IDENTIFIER, 'عدد'],
-          ['=', '='],
-          [:IDENTIFIER, 'عدد'],
-          ['-', '-'],
-          [:NUMBER, 1],
+          [:IDENTIFIER, 'عدد'], ['=', '='], [:IDENTIFIER, 'عدد'], ['-', '-'], [:NUMBER, 1],
           [:DEDENT, 0]
         ]
 
@@ -290,20 +232,9 @@ module Zaid
 
         tokens = [
           [:METHOD, METHOD],
-          [:IDENTIFIER, 'جمع_٣_أعداد'],
-          [:RECEIVE, RECEIVE],
-          [:IDENTIFIER, 'العدد_الأول'],
-          [:AND, AND],
-          [:IDENTIFIER, 'العدد_الثاني'],
-          [:AND, AND],
-          [:IDENTIFIER, 'العدد_الثالث'],
-          [:IT_IS, IT_IS],
+          [:IDENTIFIER, 'جمع_٣_أعداد'], [:RECEIVE, RECEIVE], [:IDENTIFIER, 'العدد_الأول'], [:AND, AND], [:IDENTIFIER, 'العدد_الثاني'], [:AND, AND], [:IDENTIFIER, 'العدد_الثالث'], [:IT_IS, IT_IS],
           [:INDENT, 2],
-          [:IDENTIFIER, 'العدد_الأول'],
-          ['+', '+'],
-          [:IDENTIFIER, 'العدد_الثاني'],
-          ['+', '+'],
-          [:IDENTIFIER, 'العدد_الثالث'],
+          [:IDENTIFIER, 'العدد_الأول'], ['+', '+'], [:IDENTIFIER, 'العدد_الثاني'], ['+', '+'], [:IDENTIFIER, 'العدد_الثالث'],
           [:DEDENT, 0]
         ]
 
@@ -318,18 +249,11 @@ module Zaid
         CODE
 
         tokens = [
-          [:CLASS, CLASS],
-          [:CONSTANT, 'الحيوانات'],
-          [:IS, IS],
+          [:CLASS, CLASS], [:CONSTANT, 'الحيوانات'], [:IS, IS],
           [:INDENT, 2],
-          [:METHOD, METHOD],
-          [:IDENTIFIER, 'المشي'],
-          [:IT_IS, IT_IS],
+          [:METHOD, METHOD], [:IDENTIFIER, 'المشي'], [:IT_IS, IT_IS],
           [:INDENT, 4],
-          [:IDENTIFIER, 'اطبع'],
-          ['(', '('],
-          [:STRING, 'الحيوان يمشي'],
-          [')', ')'],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, 'الحيوان يمشي'], [')', ')'],
           [:DEDENT, 2],
           [:DEDENT, 0]
         ]
@@ -381,22 +305,11 @@ module Zaid
       end
 
       def test_question_mark_in_method_call
-        tokens = [
-          [:NUMBER, 1],
-          ['.', '.'],
-          [:IDENTIFIER, 'صفر؟']
-        ]
-
-        assert_equal tokens, @tokenizer.tokenize('١.صفر؟')
+        assert_equal [[:NUMBER, 1], ['.', '.'], [:IDENTIFIER, 'صفر؟']], @tokenizer.tokenize('١.صفر؟')
       end
 
       def test_question_mark_in_method_name
-        tokens = [
-          [:METHOD, METHOD],
-          [:IDENTIFIER, 'صفر؟']
-        ]
-
-        assert_equal tokens, @tokenizer.tokenize('دالة صفر؟')
+        assert_equal [[:METHOD, METHOD], [:IDENTIFIER, 'صفر؟']], @tokenizer.tokenize('دالة صفر؟')
       end
 
       def test_invalid_identifier_with_question_mark
