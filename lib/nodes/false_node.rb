@@ -8,6 +8,10 @@ module Zaid
       def initialize
         super(false)
       end
+
+      def eval(_context)
+        Constants['خاطئ']
+      end
     end
   end
 end
