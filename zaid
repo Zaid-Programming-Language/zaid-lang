@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby -I.
+
+# frozen_string_literal: true
+
+require './lib/interpreter'
+require 'readline'
+
+interpreter = Zaid::Interpreter.new
+
+if (file = ARGV.first)
+  interpreter.eval(File.read(file))
+else
+  puts 'مُفسِّر لغة زيد | اضغط CTRL+C للخروج'
+
+  loop do
+    line = Readline.readline('>> ')
+    Readline::HISTORY.push(line)
+    value = interpreter.eval(line)
+    puts "=> #{value.ruby_value.inspect}"
+  end
+end
