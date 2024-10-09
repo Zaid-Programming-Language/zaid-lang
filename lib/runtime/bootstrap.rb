@@ -60,6 +60,14 @@ Constants['شيء'].def :اطبع do |_receiver, arguments|
   Constants['مجهول']
 end
 
+Constants['شيء'].def :'&&' do |receiver, arguments|
+  receiver.ruby_value && arguments.first.ruby_value
+end
+
+Constants['شيء'].def :'||' do |receiver, arguments|
+  receiver.ruby_value || arguments.first.ruby_value
+end
+
 define_arithmetic_operations('عدد_صحيح', ARITHMETIC_OPERATIONS)
 define_arithmetic_operations('عدد_عشري', ARITHMETIC_OPERATIONS)
 define_arithmetic_operations('نص', ARITHMETIC_OPERATIONS[0..1])
