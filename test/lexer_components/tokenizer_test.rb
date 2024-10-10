@@ -2,7 +2,7 @@
 
 require 'minitest/autorun'
 
-require 'lexer_components/tokenizer'
+require 'zaid/lexer_components/tokenizer'
 
 module Zaid
   module LexerComponents

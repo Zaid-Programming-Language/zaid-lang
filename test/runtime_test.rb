@@ -2,7 +2,7 @@
 
 require 'minitest/autorun'
 
-require 'runtime'
+require 'zaid/runtime'
 
 module Zaid
   class RuntimeTest < Minitest::Test

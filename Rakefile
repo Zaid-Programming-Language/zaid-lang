@@ -30,7 +30,7 @@ desc 'Run benchmark'
 task :benchmark do
   require 'benchmark/ips'
 
-  require './lib/interpreter'
+  require './lib/zaid/interpreter'
 
   code = File.read('syntax.zaid')
   interpreter = Zaid::Interpreter.new

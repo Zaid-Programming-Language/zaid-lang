@@ -2,7 +2,7 @@
 
 require 'minitest/autorun'
 
-require 'interpreter'
+require 'zaid/interpreter'
 
 module Zaid
   class InterpreterTest < Minitest::Test

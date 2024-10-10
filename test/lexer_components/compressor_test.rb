@@ -2,7 +2,7 @@
 
 require 'minitest/autorun'
 
-require 'lexer_components/compressor'
+require 'zaid/lexer_components/compressor'
 
 module Zaid
   module LexerComponents

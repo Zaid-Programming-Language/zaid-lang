@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-require './lib/interpreter'
+require './lib/zaid/interpreter'
 require 'readline'
 
 interpreter = Zaid::Interpreter.new

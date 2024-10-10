@@ -2,7 +2,7 @@
 
 require 'minitest/autorun'
 
-require 'lexer'
+require 'zaid/lexer'
 
 module Zaid
   class LexerTest < Minitest::Test

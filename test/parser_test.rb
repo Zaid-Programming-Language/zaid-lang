@@ -2,7 +2,7 @@
 
 require 'minitest/autorun'
 
-require 'parser'
+require 'zaid/parser'
 
 module Zaid
   class ParserTest < Minitest::Test
