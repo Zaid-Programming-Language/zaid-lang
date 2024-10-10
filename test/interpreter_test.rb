@@ -131,9 +131,7 @@ module Zaid
         الحيوانات.جديد.المشي
       CODE
 
-      assert_output("الحيوان يمشي\n") do
-        @interpreter.eval(code)
-      end
+      assert_output("الحيوان يمشي\n") { @interpreter.eval(code) }
     end
 
     def test_reopen_class
