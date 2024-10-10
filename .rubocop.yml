@@ -1,0 +1,49 @@
+require:
+  - rubocop-minitest
+  - rubocop-performance
+  - rubocop-rake
+
+AllCops:
+  TargetRubyVersion: 3.3.5
+  NewCops: enable
+  Exclude:
+    - '**/._*'
+    - 'lib/parser.rb'
+
+Lint/DeprecatedConstants:
+  Enabled: false
+
+Layout/LineLength:
+  AllowedPatterns:
+    - !ruby/regexp /\A *# /
+  Exclude:
+    - 'test/**/*'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'test/**/*'
+
+Metrics/ClassLength:
+  CountAsOne: ['array', 'method_call']
+  Exclude:
+    - 'test/**/*'
+
+Metrics/MethodLength:
+  CountAsOne: ['array', 'method_call']
+  Exclude:
+    - 'test/**/*'
+
+Minitest/MultipleAssertions:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/QuotedSymbols:
+  EnforcedStyle: single_quotes
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: single_quotes
