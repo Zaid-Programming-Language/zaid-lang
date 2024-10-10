@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './context'
+require_relative 'context'
 
 module Zaid
   module Runtime

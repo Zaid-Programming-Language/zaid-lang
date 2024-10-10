@@ -15,7 +15,7 @@ module Zaid
     end
 
     def test_float
-      assert_equal 1.5, @interpreter.eval('١.٥').ruby_value
+      assert_in_delta(1.5, @interpreter.eval('١.٥').ruby_value)
     end
 
     def test_string
@@ -23,11 +23,11 @@ module Zaid
     end
 
     def test_true
-      assert_equal true, @interpreter.eval('صحيح').ruby_value
+      assert @interpreter.eval('صحيح').ruby_value
     end
 
     def test_false
-      assert_equal false, @interpreter.eval('خاطئ').ruby_value
+      refute @interpreter.eval('خاطئ').ruby_value
     end
 
     def test_nil
@@ -42,10 +42,10 @@ module Zaid
     end
 
     def test_arithmetic_operations_on_floats
-      assert_equal 3.0, @interpreter.eval('١.٠ + ٢').ruby_value
-      assert_equal(-1.0, @interpreter.eval('١.٠ - ٢').ruby_value)
-      assert_equal 2.0, @interpreter.eval('١.٠ * ٢').ruby_value
-      assert_equal 0.5, @interpreter.eval('١.٠ / ٢').ruby_value
+      assert_in_delta(3.0, @interpreter.eval('١.٠ + ٢').ruby_value)
+      assert_in_delta(-1.0, @interpreter.eval('١.٠ - ٢').ruby_value)
+      assert_in_delta(2.0, @interpreter.eval('١.٠ * ٢').ruby_value)
+      assert_in_delta(0.5, @interpreter.eval('١.٠ / ٢').ruby_value)
     end
 
     def test_arithmetic_operations_on_strings
@@ -61,44 +61,44 @@ module Zaid
     end
 
     def test_comparison_operations_on_integers
-      assert_equal true, @interpreter.eval('١ == ١').ruby_value
-      assert_equal true, @interpreter.eval('١ != ٢').ruby_value
-      assert_equal true, @interpreter.eval('١ < ٢').ruby_value
-      assert_equal true, @interpreter.eval('١ <= ١').ruby_value
-      assert_equal true, @interpreter.eval('٢ > ١').ruby_value
-      assert_equal true, @interpreter.eval('١ >= ١').ruby_value
+      assert @interpreter.eval('١ == ١').ruby_value
+      assert @interpreter.eval('١ != ٢').ruby_value
+      assert @interpreter.eval('١ < ٢').ruby_value
+      assert @interpreter.eval('١ <= ١').ruby_value
+      assert @interpreter.eval('٢ > ١').ruby_value
+      assert @interpreter.eval('١ >= ١').ruby_value
     end
 
     def test_comparison_operations_on_floats
-      assert_equal true, @interpreter.eval('١.٠ == ١.٠').ruby_value
-      assert_equal true, @interpreter.eval('١.٠ != ٢.٠').ruby_value
-      assert_equal true, @interpreter.eval('١.٠ < ٢.٠').ruby_value
-      assert_equal true, @interpreter.eval('١.٠ <= ١.٠').ruby_value
-      assert_equal true, @interpreter.eval('٢.٠ > ١.٠').ruby_value
-      assert_equal true, @interpreter.eval('١.٠ >= ١.٠').ruby_value
+      assert @interpreter.eval('١.٠ == ١.٠').ruby_value
+      assert @interpreter.eval('١.٠ != ٢.٠').ruby_value
+      assert @interpreter.eval('١.٠ < ٢.٠').ruby_value
+      assert @interpreter.eval('١.٠ <= ١.٠').ruby_value
+      assert @interpreter.eval('٢.٠ > ١.٠').ruby_value
+      assert @interpreter.eval('١.٠ >= ١.٠').ruby_value
     end
 
     def test_comparison_operations_on_strings
-      assert_equal true, @interpreter.eval('"زيد" == "زيد"').ruby_value
-      assert_equal true, @interpreter.eval('"زيد" != "زياد"').ruby_value
-      assert_equal false, @interpreter.eval('"زيد" < "زياد"').ruby_value
-      assert_equal true, @interpreter.eval('"زيد" <= "زيد"').ruby_value
-      assert_equal false, @interpreter.eval('"زياد" > "زيد"').ruby_value
-      assert_equal true, @interpreter.eval('"زيد" >= "زيد"').ruby_value
+      assert @interpreter.eval('"زيد" == "زيد"').ruby_value
+      assert @interpreter.eval('"زيد" != "زياد"').ruby_value
+      refute @interpreter.eval('"زيد" < "زياد"').ruby_value
+      assert @interpreter.eval('"زيد" <= "زيد"').ruby_value
+      refute @interpreter.eval('"زياد" > "زيد"').ruby_value
+      assert @interpreter.eval('"زيد" >= "زيد"').ruby_value
     end
 
     def test_arabic_comparison_operations
-      assert_equal true, @interpreter.eval('١ يساوي ١').ruby_value
-      assert_equal true, @interpreter.eval('١ لا يساوي ٢').ruby_value
-      assert_equal true, @interpreter.eval('١ أصغر من ٢').ruby_value
-      assert_equal true, @interpreter.eval('١ أصغر من أو يساوي ١').ruby_value
-      assert_equal true, @interpreter.eval('٢ أكبر من ١').ruby_value
-      assert_equal true, @interpreter.eval('١ أكبر من أو يساوي ١').ruby_value
+      assert @interpreter.eval('١ يساوي ١').ruby_value
+      assert @interpreter.eval('١ لا يساوي ٢').ruby_value
+      assert @interpreter.eval('١ أصغر من ٢').ruby_value
+      assert @interpreter.eval('١ أصغر من أو يساوي ١').ruby_value
+      assert @interpreter.eval('٢ أكبر من ١').ruby_value
+      assert @interpreter.eval('١ أكبر من أو يساوي ١').ruby_value
     end
 
     def test_logical_operations
-      assert_equal true, @interpreter.eval('٥ > ٣ && ٥ > ٢')
-      assert_equal true, @interpreter.eval('٥ < ٣ || ٥ > ٢')
+      assert @interpreter.eval('٥ > ٣ && ٥ > ٢')
+      assert @interpreter.eval('٥ < ٣ || ٥ > ٢')
     end
 
     def test_assign

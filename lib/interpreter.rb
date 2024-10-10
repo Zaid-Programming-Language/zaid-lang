@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative './parser'
-require_relative './runtime'
+require_relative 'parser'
+require_relative 'runtime'
 
 module Zaid
   class Interpreter

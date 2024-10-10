@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './zaid_object'
+require_relative 'zaid_object'
 
 module Zaid
   module Runtime

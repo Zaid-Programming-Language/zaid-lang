@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative './context'
-require_relative './zaid_class'
+require_relative 'context'
+require_relative 'zaid_class'
 
 ARITHMETIC_OPERATIONS = %i[+ * - /].freeze
 COMPARISON_OPERATIONS = %i[> < >= <= == !=].freeze

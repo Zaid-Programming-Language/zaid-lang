@@ -18,7 +18,7 @@ task :generate_parser do
   parser_content = File.read('lib/parser.rb')
 
   modified_content = parser_content.sub(
-    /class Parser < Racc::Parser/,
+    'class Parser < Racc::Parser',
     "module Zaid\n  class Parser < Racc::Parser\n    include Nodes"
   )
   modified_content << "\nend" # Close the Zaid module.

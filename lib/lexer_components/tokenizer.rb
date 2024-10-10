@@ -77,7 +77,7 @@ module Zaid
 
           next unless match
 
-          position_increase = send("parse_#{token[:type]}", match[1], tokens, indent_stack)
+          position_increase = send(:"parse_#{token[:type]}", match[1], tokens, indent_stack)
 
           return position_increase unless INDENT_KEYWORDS.include?(match[1])
 
@@ -100,7 +100,7 @@ module Zaid
           raise 'خطأ: لا يمكن استخدام "؟" في اسم المعرف إلا بعد كلمة "دالة" أو بعد نقطة.'
         end
 
-        tokens << if KEYWORDS_MAPPING.keys.include?(identifier)
+        tokens << if KEYWORDS_MAPPING.key?(identifier)
                     [KEYWORDS_MAPPING[identifier], identifier]
                   elsif tokens.last == [:CLASS, CLASS]
                     [:CONSTANT, identifier]

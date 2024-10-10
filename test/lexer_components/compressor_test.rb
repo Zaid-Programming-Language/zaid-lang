@@ -122,7 +122,11 @@ module Zaid
       end
 
       def test_compress_and_between_receive_and_then
-        tokens = [[:METHOD, METHOD], [:IDENTIFIER, 'تجربة'], [:RECEIVE, RECEIVE], [:IDENTIFIER, 'المتغير_الأول'], [:AND, AND], [:IDENTIFIER, 'المتغير_الثاني'], [:THEN, THEN]]
+        tokens = [
+          [:METHOD, METHOD], [:IDENTIFIER, 'تجربة'], [:RECEIVE, RECEIVE],
+          [:IDENTIFIER, 'المتغير_الأول'], [:AND, AND], [:IDENTIFIER, 'المتغير_الثاني'],
+          [:THEN, THEN]
+        ]
 
         assert_equal tokens, @compressor.compress(tokens)
       end
