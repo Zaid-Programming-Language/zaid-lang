@@ -12,18 +12,19 @@ end
 
 desc 'Generate parser from grammar'
 task :generate_parser do
-  sh 'racc -o lib/parser.rb lib/grammar.y'
+  sh 'racc -o lib/zaid/parser.rb lib/zaid/grammar.y'
 
   # Modify the generated parser to wrap it in the Zaid module.
-  parser_content = File.read('lib/parser.rb')
+  parser_content = File.read('lib/zaid/parser.rb')
 
   modified_content = parser_content.sub(
     'class Parser < Racc::Parser',
     "module Zaid\n  class Parser < Racc::Parser\n    include Nodes"
   )
+
   modified_content << "\nend" # Close the Zaid module.
 
-  File.write('lib/parser.rb', modified_content)
+  File.write('lib/zaid/parser.rb', modified_content)
 end
 
 desc 'Run benchmark'
