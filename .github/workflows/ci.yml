@@ -8,7 +8,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  testing:
     runs-on: ubuntu-latest
     name: Ruby ${{ matrix.ruby }}
     strategy:
@@ -21,11 +21,38 @@ jobs:
           - '3.0.0'
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
+
       - name: Run the default task for testing
         run: bundle exec rake
+
+  check-parser:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.5'
+          bundler-cache: true
+
+      - name: Generate parser
+        run: bundle exec rake generate_parser
+
+      - name: Check for changes in parser
+        run: |
+          if git diff --quiet ./lib/zaid/parser.rb; then
+            echo "No changes in parser.rb"
+          else
+            echo "parser.rb has changed"
+            exit 1
+          fi
