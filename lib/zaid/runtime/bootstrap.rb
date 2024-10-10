@@ -61,19 +61,11 @@ Constants['شيء'].def :اطبع do |_receiver, arguments|
 end
 
 Constants['شيء'].def :'&&' do |receiver, arguments|
-  if receiver.ruby_value && arguments.first.ruby_value
-    Constants['صحيح']
-  else
-    Constants['خاطئ']
-  end
+  receiver.ruby_value && arguments.first.ruby_value
 end
 
 Constants['شيء'].def :'||' do |receiver, arguments|
-  if receiver.ruby_value || arguments.first.ruby_value
-    Constants['صحيح']
-  else
-    Constants['خاطئ']
-  end
+  receiver.ruby_value || arguments.first.ruby_value
 end
 
 define_arithmetic_operations('عدد_صحيح', ARITHMETIC_OPERATIONS)
