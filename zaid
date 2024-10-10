@@ -1,9 +1,22 @@
-#!/usr/bin/env ruby -I.
+#!/usr/bin/env ruby
 
 # frozen_string_literal: true
 
-require './lib/zaid/interpreter'
 require 'readline'
+
+require './lib/zaid/interpreter'
+
+def format_value(value)
+  if value.nil?
+    'مجهول'
+  elsif value == true
+    'صحيح'
+  elsif value == false
+    'خاطئ'
+  else
+    value.inspect
+  end
+end
 
 interpreter = Zaid::Interpreter.new
 
@@ -14,8 +27,18 @@ else
 
   loop do
     line = Readline.readline('>> ')
+
+    break if line.nil?
+
     Readline::HISTORY.push(line)
     value = interpreter.eval(line)
-    puts "=> #{value.ruby_value.inspect}"
+
+    if value.respond_to?(:ruby_value)
+      puts "=> #{format_value(value.ruby_value)}"
+    else
+      puts "=> #{format_value(value)}"
+    end
+  rescue Interrupt
+    break
   end
 end

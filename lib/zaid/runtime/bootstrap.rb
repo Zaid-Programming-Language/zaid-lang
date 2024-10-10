@@ -14,12 +14,6 @@ def define_arithmetic_operations(class_name, operations)
   end
 end
 
-def perform_arithmetic_operation(receiver, arguments, operation, class_name)
-  result = receiver.ruby_value.send(operation, arguments.first.ruby_value)
-
-  Constants[class_name].new_with_value(result)
-end
-
 def define_comparison_operations(class_name, operations)
   operations.each do |operation|
     Constants[class_name].def operation do |receiver, arguments|
@@ -28,6 +22,12 @@ def define_comparison_operations(class_name, operations)
       result ? Constants['صحيح'] : Constants['خاطئ']
     end
   end
+end
+
+def perform_arithmetic_operation(receiver, arguments, operation, class_name)
+  result = receiver.ruby_value.send(operation, arguments.first.ruby_value)
+
+  Constants[class_name].new_with_value(result)
 end
 
 Constants = {}
@@ -61,11 +61,19 @@ Constants['شيء'].def :اطبع do |_receiver, arguments|
 end
 
 Constants['شيء'].def :'&&' do |receiver, arguments|
-  receiver.ruby_value && arguments.first.ruby_value
+  if receiver.ruby_value && arguments.first.ruby_value
+    Constants['صحيح']
+  else
+    Constants['خاطئ']
+  end
 end
 
 Constants['شيء'].def :'||' do |receiver, arguments|
-  receiver.ruby_value || arguments.first.ruby_value
+  if receiver.ruby_value || arguments.first.ruby_value
+    Constants['صحيح']
+  else
+    Constants['خاطئ']
+  end
 end
 
 define_arithmetic_operations('عدد_صحيح', ARITHMETIC_OPERATIONS)
