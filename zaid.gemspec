@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = 'Zaid is an Arabic programming language that is designed to be simple and easy to learn.'
   spec.homepage = 'https://zaid-lang.org'
   spec.license = 'MIT'
-  spec.required_ruby_version = '>= 3.3.5'
+  spec.required_ruby_version = '>= 3.0.0'
 
   spec.metadata['allowed_push_host'] = 'https://rubygems.org'
 

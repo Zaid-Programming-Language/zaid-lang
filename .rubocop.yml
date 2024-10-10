@@ -4,11 +4,11 @@ require:
   - rubocop-rake
 
 AllCops:
-  TargetRubyVersion: 3.3.5
+  TargetRubyVersion: 3.0.0
   NewCops: enable
   Exclude:
     - '**/._*'
-    - 'lib/parser.rb'
+    - 'lib/zaid/parser.rb'
 
 Lint/DeprecatedConstants:
   Enabled: false
