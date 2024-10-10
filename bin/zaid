@@ -4,7 +4,7 @@
 
 require 'readline'
 
-require './lib/zaid'
+require 'zaid'
 
 def format_value(value)
   if value.nil?
