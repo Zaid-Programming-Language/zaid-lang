@@ -28,6 +28,8 @@ module Zaid
             compression_position += 1
           when [:IF, IF]
             compression_position += compress_if(tokens, compressed, compression_position)
+          when [:ELSE_IF, ELSE_IF]
+            compression_position += compress_else_if(tokens, compressed, compression_position)
           when [:WHILE, WHILE]
             compression_position += compress_while(tokens, compressed, compression_position)
           when [:GREATER, GREATER]
@@ -60,6 +62,19 @@ module Zaid
       def compress_if(tokens, compressed, compression_position)
         if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:WAS, WAS]
           compressed << [:IF, "#{IF} #{WAS}"]
+
+          2
+        else
+          compressed << tokens[compression_position]
+
+          1
+        end
+      end
+
+      # Comverts [[:ELSE_IF, ELSE_IF], [:WAS, WAS]] to [:ELSE_IF, "#{ELSE_IF} #{WAS}"].
+      def compress_else_if(tokens, compressed, compression_position)
+        if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:WAS, WAS]
+          compressed << [:ELSE_IF, "#{ELSE_IF} #{WAS}"]
 
           2
         else
