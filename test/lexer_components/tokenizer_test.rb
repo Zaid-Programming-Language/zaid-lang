@@ -190,12 +190,39 @@ module Zaid
         tokens = [
           [:IF, IF], [:WAS, WAS], [:NUMBER, 5], [:GREATER, GREATER], [:THAN, THAN], [:NUMBER, 3], [:THEN, THEN],
           [:INDENT, 2],
-          [:IDENTIFIER, 'اطبع'],
-          ['(', '('], [:STRING, '٥ أكبر من ٣'], [')', ')'],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أكبر من ٣'], [')', ')'],
           [:DEDENT, 0],
           [:ELSE, ELSE],
           [:INDENT, 2],
           [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أصغر من أو يساوي ٣'], [')', ')'],
+          [:DEDENT, 0]
+        ]
+
+        assert_equal tokens, @tokenizer.tokenize(code)
+      end
+
+      def test_else_if_statement
+        code = <<~CODE
+          إذا كان ٥ أكبر من ٣ إذن
+            اطبع("٥ أكبر من ٣")
+          وإذا كان ٥ أصغر من ٣ إذن
+            اطبع("٥ أصغر من ٣")
+          وإلا
+            اطبع("٥ يساوي ٣")
+        CODE
+
+        tokens = [
+          [:IF, IF], [:WAS, WAS], [:NUMBER, 5], [:GREATER, GREATER], [:THAN, THAN], [:NUMBER, 3], [:THEN, THEN],
+          [:INDENT, 2],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أكبر من ٣'], [')', ')'],
+          [:DEDENT, 0],
+          [:ELSE_IF, ELSE_IF], [:WAS, WAS], [:NUMBER, 5], [:LESS, LESS], [:THAN, THAN], [:NUMBER, 3], [:THEN, THEN],
+          [:INDENT, 2],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أصغر من ٣'], [')', ')'],
+          [:DEDENT, 0],
+          [:ELSE, ELSE],
+          [:INDENT, 2],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ يساوي ٣'], [')', ')'],
           [:DEDENT, 0]
         ]
 

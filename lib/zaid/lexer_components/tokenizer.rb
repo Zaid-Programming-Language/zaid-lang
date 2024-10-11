@@ -13,6 +13,7 @@ module Zaid
         CLASS => :CLASS,
         DIVIDE => :DIVIDE,
         ELSE => :ELSE,
+        ELSE_IF => :ELSE_IF,
         EQUALS => :EQUALS,
         FALSE => :FALSE,
         GREATER => :GREATER,
