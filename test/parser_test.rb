@@ -167,6 +167,36 @@ module Zaid
       assert_equal nodes, @parser.parse(code)
     end
 
+    def test_if_node_with_else_if
+      code = <<~CODE
+        عدد = ٥
+
+        إذا كان عدد أكبر من ٣ إذن
+          اطبع("عدد أكبر من ٣")
+        وإذا كان عدد أصغر من ٣ إذن
+          اطبع("عدد أصغر من ٣")
+        وإلا
+          اطبع("عدد يساوي ٣")
+      CODE
+
+      nodes = NodeList.new(
+        [
+          SetLocalNode.new('عدد', NumberNode.new(5)),
+          IfNode.new(
+            CallNode.new(GetLocalNode.new('عدد'), '>', [NumberNode.new(3)]),
+            NodeList.new([CallNode.new(nil, 'اطبع', [StringNode.new('عدد أكبر من ٣')])]),
+            IfNode.new(
+              CallNode.new(GetLocalNode.new('عدد'), '<', [NumberNode.new(3)]),
+              NodeList.new([CallNode.new(nil, 'اطبع', [StringNode.new('عدد أصغر من ٣')])]),
+              NodeList.new([CallNode.new(nil, 'اطبع', [StringNode.new('عدد يساوي ٣')])])
+            )
+          )
+        ]
+      )
+
+      assert_equal nodes, @parser.parse(code)
+    end
+
     def test_while_node
       code = <<~CODE
         عدد = ٥

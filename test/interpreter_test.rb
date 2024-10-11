@@ -166,6 +166,21 @@ module Zaid
       assert_output("إنه خاطئ!\n") { @interpreter.eval(code) }
     end
 
+    def test_if_else_if
+      code = <<~CODE
+        عدد = ١
+
+        إذا كان عدد أكبر من ٣ إذن
+          اطبع("عدد أكبر من ٣")
+        وإذا كان عدد أصغر من ٣ إذن
+          اطبع("عدد أصغر من ٣")
+        وإلا
+          اطبع("عدد يساوي ٣")
+      CODE
+
+      assert_output("عدد أصغر من ٣\n") { @interpreter.eval(code) }
+    end
+
     def test_while
       code = <<~CODE
         عدد = ٥
