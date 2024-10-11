@@ -5,6 +5,7 @@ class Parser
   token CONSTANT
   token DEDENT
   token ELSE
+  token ELSE_IF
   token FALSE
   token FLOAT
   token IDENTIFIER
@@ -145,8 +146,13 @@ class Parser
     ;
 
     If:
-      IF Expression THEN Block { result = IfNode.new(val[1], val[3], nil) }
-    | IF Expression THEN Block ELSE Block { result = IfNode.new(val[1], val[3], val[5]) }
+      IF Expression THEN Block ElseIf { result = IfNode.new(val[1], val[3], val[4]) }
+    ;
+
+    ElseIf:
+      /* nothing */                        { result = nil }
+    | ELSE Block                           { result = val[1] }
+    | ELSE_IF Expression THEN Block ElseIf { result = IfNode.new(val[1], val[3], val[4]) }
     ;
 
     While:
