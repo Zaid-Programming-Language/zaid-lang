@@ -255,5 +255,15 @@ module Zaid
 
       assert_output("2\n") { @interpreter.eval(code) }
     end
+
+    def test_array_add
+      code = <<~CODE
+        مصفوفة_الأعداد = []
+        مصفوفة_الأعداد.أضف(١)
+        اطبع(مصفوفة_الأعداد[٠])
+      CODE
+
+      assert_output("1\n") { @interpreter.eval(code) }
+    end
   end
 end

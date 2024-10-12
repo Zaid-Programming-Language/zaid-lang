@@ -76,3 +76,7 @@ define_arithmetic_operations('نص', ARITHMETIC_OPERATIONS[0..1])
 define_comparison_operations('عدد_صحيح', COMPARISON_OPERATIONS)
 define_comparison_operations('عدد_عشري', COMPARISON_OPERATIONS)
 define_comparison_operations('نص', COMPARISON_OPERATIONS)
+
+Constants['مصفوفة'].def :أضف do |receiver, arguments|
+  receiver.ruby_value << arguments.first
+end
