@@ -1,5 +1,6 @@
 class Parser
   token AND
+  token BREAK
   token CLASS
   token COMMENT
   token CONSTANT
@@ -51,6 +52,7 @@ class Parser
 
     Expression:
       Literal
+    | Break
     | Call
     | Operator
     | GetConstant
@@ -76,6 +78,10 @@ class Parser
     | TRUE   { result = TrueNode.new }
     | FALSE  { result = FalseNode.new }
     | NIL    { result = NilNode.new }
+    ;
+
+    Break:
+      BREAK { result = BreakNode.new }
     ;
 
     Call:

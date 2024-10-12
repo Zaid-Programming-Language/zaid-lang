@@ -204,6 +204,7 @@ module Zaid
         طالما كان عدد أكبر من ٠ إذن
           اطبع(عدد)
           عدد = عدد - ١
+          توقف
       CODE
 
       nodes = NodeList.new(
@@ -214,7 +215,8 @@ module Zaid
             NodeList.new(
               [
                 CallNode.new(nil, 'اطبع', [GetLocalNode.new('عدد')]),
-                SetLocalNode.new('عدد', CallNode.new(GetLocalNode.new('عدد'), '-', [NumberNode.new(1)]))
+                SetLocalNode.new('عدد', CallNode.new(GetLocalNode.new('عدد'), '-', [NumberNode.new(1)])),
+                BreakNode.new
               ]
             )
           )
