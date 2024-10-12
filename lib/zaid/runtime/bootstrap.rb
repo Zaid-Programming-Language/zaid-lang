@@ -4,7 +4,7 @@ require_relative 'context'
 require_relative 'zaid_class'
 
 ARITHMETIC_OPERATIONS = %i[+ * - /].freeze
-COMPARISON_OPERATIONS = %i[> < >= <= == !=].freeze
+COMPARISON_OPERATIONS = %i[== != > < >= <=].freeze
 
 def define_arithmetic_operations(class_name, operations)
   operations.each do |operation|
@@ -76,7 +76,14 @@ define_arithmetic_operations('نص', ARITHMETIC_OPERATIONS[0..1])
 define_comparison_operations('عدد_صحيح', COMPARISON_OPERATIONS)
 define_comparison_operations('عدد_عشري', COMPARISON_OPERATIONS)
 define_comparison_operations('نص', COMPARISON_OPERATIONS)
+define_comparison_operations('نوع_صحيح', COMPARISON_OPERATIONS[0..1])
+define_comparison_operations('نوع_خاطئ', COMPARISON_OPERATIONS[0..1])
+define_comparison_operations('نوع_مجهول', COMPARISON_OPERATIONS[0..1])
 
 Constants['مصفوفة'].def :أضف do |receiver, arguments|
   receiver.ruby_value << arguments.first
+end
+
+Constants['مصفوفة'].def :الحجم do |receiver, _arguments|
+  Constants['عدد_صحيح'].new_with_value(receiver.ruby_value.size)
 end
