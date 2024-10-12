@@ -15,6 +15,7 @@ module Zaid
     WAS     = 'كان'
 
     # Uncompressable keywords:
+    BREAK   = 'توقف'
     CLASS   = 'نوع'
     ELSE    = 'وإلا'
     ELSE_IF = 'وإذا'
