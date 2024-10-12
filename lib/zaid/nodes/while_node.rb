@@ -4,7 +4,13 @@ module Zaid
   module Nodes
     WhileNode = Struct.new(:condition, :body) do
       def eval(context)
-        body.eval(context) while condition.eval(context).ruby_value
+        while condition.eval(context).ruby_value
+          begin
+            body.eval(context)
+          rescue BreakException
+            break
+          end
+        end
 
         Constants['مجهول']
       end
