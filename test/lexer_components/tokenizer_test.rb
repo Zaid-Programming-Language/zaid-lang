@@ -50,6 +50,7 @@ module Zaid
           [:IDENTIFIER, 'عدد'], ['=', '='], [:IDENTIFIER, 'عدد'], ['-', '-'], [:NUMBER, 1],
           [:DEDENT, 0],
           [:NEWLINE, "\n"],
+          [:NEWLINE, "\n"],
           [:COMMENT, 'تعليق: هذا تعليق في وسط البرنامج'],
           [:NEWLINE, "\n"],
           [:COMMENT, 'ملاحظة: هذه ملاحظة'],
@@ -173,7 +174,8 @@ module Zaid
           [:IF, IF], [:WAS, WAS], [:NUMBER, 5], [:GREATER, GREATER], [:THAN, THAN], [:NUMBER, 3], [:THEN, THEN],
           [:INDENT, 2],
           [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أكبر من ٣'], [')', ')'],
-          [:DEDENT, 0]
+          [:DEDENT, 0],
+          [:NEWLINE, "\n"]
         ]
 
         assert_equal tokens, @tokenizer.tokenize(code)
@@ -192,10 +194,12 @@ module Zaid
           [:INDENT, 2],
           [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أكبر من ٣'], [')', ')'],
           [:DEDENT, 0],
+          [:NEWLINE, "\n"],
           [:ELSE, ELSE],
           [:INDENT, 2],
           [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أصغر من أو يساوي ٣'], [')', ')'],
-          [:DEDENT, 0]
+          [:DEDENT, 0],
+          [:NEWLINE, "\n"]
         ]
 
         assert_equal tokens, @tokenizer.tokenize(code)
@@ -216,14 +220,17 @@ module Zaid
           [:INDENT, 2],
           [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أكبر من ٣'], [')', ')'],
           [:DEDENT, 0],
+          [:NEWLINE, "\n"],
           [:ELSE_IF, ELSE_IF], [:WAS, WAS], [:NUMBER, 5], [:LESS, LESS], [:THAN, THAN], [:NUMBER, 3], [:THEN, THEN],
           [:INDENT, 2],
           [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أصغر من ٣'], [')', ')'],
           [:DEDENT, 0],
+          [:NEWLINE, "\n"],
           [:ELSE, ELSE],
           [:INDENT, 2],
           [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ يساوي ٣'], [')', ')'],
-          [:DEDENT, 0]
+          [:DEDENT, 0],
+          [:NEWLINE, "\n"]
         ]
 
         assert_equal tokens, @tokenizer.tokenize(code)
@@ -265,7 +272,8 @@ module Zaid
           [:IDENTIFIER, 'جمع_٣_أعداد'], [:RECEIVE, RECEIVE], [:IDENTIFIER, 'العدد_الأول'], [:AND, AND], [:IDENTIFIER, 'العدد_الثاني'], [:AND, AND], [:IDENTIFIER, 'العدد_الثالث'], [:IT_IS, IT_IS],
           [:INDENT, 2],
           [:IDENTIFIER, 'العدد_الأول'], ['+', '+'], [:IDENTIFIER, 'العدد_الثاني'], ['+', '+'], [:IDENTIFIER, 'العدد_الثالث'],
-          [:DEDENT, 0]
+          [:DEDENT, 0],
+          [:NEWLINE, "\n"]
         ]
 
         assert_equal tokens, @tokenizer.tokenize(code)
@@ -285,7 +293,9 @@ module Zaid
           [:INDENT, 4],
           [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, 'الحيوان يمشي'], [')', ')'],
           [:DEDENT, 2],
-          [:DEDENT, 0]
+          [:NEWLINE, "\n"],
+          [:DEDENT, 0],
+          [:NEWLINE, "\n"]
         ]
 
         assert_equal tokens, @tokenizer.tokenize(code)

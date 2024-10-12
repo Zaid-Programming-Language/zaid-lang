@@ -26,7 +26,8 @@ module Zaid
         [:IF, IF], [:WAS, WAS], [:NUMBER, 5], [:GREATER, GREATER], [:THAN, THAN], [:NUMBER, 3], [:THEN, THEN],
         [:INDENT, 2],
         [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أكبر من ٣'], [')', ')'],
-        [:DEDENT, 0]
+        [:DEDENT, 0],
+        [:NEWLINE, "\n"]
       ]
 
       assert_equal tokens, @lexer.tokenize(code, run_compression: false)
@@ -42,7 +43,8 @@ module Zaid
         [:IF, "#{IF} #{WAS}"], [:NUMBER, 5], ['>', '>'], [:NUMBER, 3], [:THEN, THEN],
         [:INDENT, 2],
         [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, '٥ أكبر من ٣'], [')', ')'],
-        [:DEDENT, 0]
+        [:DEDENT, 0],
+        [:NEWLINE, "\n"]
       ]
 
       assert_equal tokens, @lexer.tokenize(code, run_compression: true)

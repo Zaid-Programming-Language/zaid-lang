@@ -7,6 +7,8 @@ module Zaid
     class Compressor
       include Keywords
 
+      KEYWORDS_TO_REMOVE_NEWLINES_BEFORE = [[:ELSE, ELSE], [:ELSE_IF, "#{ELSE_IF} #{WAS}"]].freeze
+
       def compress(tokens)
         compressed = []
         between_receive_and_then = false
@@ -53,7 +55,7 @@ module Zaid
           end
         end
 
-        compressed
+        remove_newlines_before(compressed, KEYWORDS_TO_REMOVE_NEWLINES_BEFORE)
       end
 
       private
@@ -197,6 +199,14 @@ module Zaid
         end
 
         1
+      end
+
+      def remove_newlines_before(compressed, keywords)
+        compressed.each_with_index.reduce([]) do |result, (token, _index)|
+          (result.pop while result.last == [:NEWLINE, "\n"]) if keywords.include?(token)
+
+          result << token
+        end
       end
     end
   end

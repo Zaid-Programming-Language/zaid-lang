@@ -66,7 +66,10 @@ module Zaid
         parsing_position = 0
         parsing_position += parse_token(code, tokens, indent_stack, parsing_position) while parsing_position < code.size
 
-        tokens << [:DEDENT, indent_stack.last || 0] while indent_stack.pop
+        while indent_stack.pop
+          tokens << [:DEDENT, indent_stack.last || 0]
+          tokens << [:NEWLINE, "\n"]
+        end
 
         run_compression ? Compressor.new.compress(tokens) : tokens
       end
@@ -142,6 +145,7 @@ module Zaid
           while indent.size < (indent_stack.last || 0)
             indent_stack.pop
             tokens << [:DEDENT, indent.size]
+            tokens << [:NEWLINE, "\n"]
           end
         end
 
