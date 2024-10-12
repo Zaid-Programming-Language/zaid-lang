@@ -205,5 +205,20 @@ module Zaid
 
       assert_output("5\n") { @interpreter.eval(code) }
     end
+
+    def test_while_with_continue
+      code = <<~CODE
+        عدد = ٥
+
+        طالما كان عدد أكبر من ٠ إذن
+          إذا كان عدد يساوي ٣ إذن
+            عدد = عدد - ١
+            التالي
+          اطبع(عدد)
+          عدد = عدد - ١
+      CODE
+
+      assert_output("5\n4\n2\n1\n") { @interpreter.eval(code) }
+    end
   end
 end
