@@ -205,6 +205,7 @@ module Zaid
           اطبع(عدد)
           عدد = عدد - ١
           توقف
+          التالي
       CODE
 
       nodes = NodeList.new(
@@ -216,7 +217,8 @@ module Zaid
               [
                 CallNode.new(nil, 'اطبع', [GetLocalNode.new('عدد')]),
                 SetLocalNode.new('عدد', CallNode.new(GetLocalNode.new('عدد'), '-', [NumberNode.new(1)])),
-                BreakNode.new
+                BreakNode.new,
+                ContinueNode.new
               ]
             )
           )

@@ -9,6 +9,8 @@ module Zaid
             body.eval(context)
           rescue BreakException
             break
+          rescue ContinueException
+            next
           end
         end
 

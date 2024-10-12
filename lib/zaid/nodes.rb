@@ -3,6 +3,7 @@
 require_relative 'nodes/break_node'
 require_relative 'nodes/call_node'
 require_relative 'nodes/class_node'
+require_relative 'nodes/continue_node'
 require_relative 'nodes/false_node'
 require_relative 'nodes/float_node'
 require_relative 'nodes/get_constant_node'

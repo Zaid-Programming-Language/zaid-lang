@@ -4,6 +4,7 @@ class Parser
   token CLASS
   token COMMENT
   token CONSTANT
+  token CONTINUE
   token DEDENT
   token ELSE
   token ELSE_IF
@@ -54,6 +55,7 @@ class Parser
       Literal
     | Break
     | Call
+    | Continue
     | Operator
     | GetConstant
     | SetConstant
@@ -88,6 +90,10 @@ class Parser
       IDENTIFIER Arguments                { result = CallNode.new(nil, val[0], val[1]) }
     | Expression '.' IDENTIFIER Arguments { result = CallNode.new(val[0], val[2], val[3]) }
     | Expression '.' IDENTIFIER           { result = CallNode.new(val[0], val[2], []) }
+    ;
+
+    Continue:
+      CONTINUE { result = ContinueNode.new }
     ;
 
     Arguments:
