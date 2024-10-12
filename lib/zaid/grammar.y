@@ -68,6 +68,7 @@ class Parser
     | While
     | ArrayLiteral
     | ArrayAccess
+    | ArrayAssignment
     | '(' Expression ')' { result = val[1] }
     ;
 
@@ -186,6 +187,10 @@ class Parser
 
     ArrayAccess:
       Expression '[' Expression ']' { result = ArrayAccessNode.new(val[0], val[2]) }
+    ;
+
+    ArrayAssignment:
+      Expression '[' Expression ']' '=' Expression { result = ArrayAssignmentNode.new(val[0], val[2], val[5]) }
     ;
 end
 

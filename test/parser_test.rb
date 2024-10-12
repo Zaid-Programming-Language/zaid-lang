@@ -325,5 +325,23 @@ module Zaid
 
       assert_equal nodes, @parser.parse(code)
     end
+
+    def test_array_assignment_node
+      code = <<~CODE
+        مصفوفة_الأعداد = [١]
+        مصفوفة_الأعداد[٠] = ٢
+        اطبع(مصفوفة_الأعداد[٠])
+      CODE
+
+      nodes = NodeList.new(
+        [
+          SetLocalNode.new('مصفوفة_الأعداد', ArrayNode.new([NumberNode.new(1)])),
+          ArrayAssignmentNode.new(GetLocalNode.new('مصفوفة_الأعداد'), NumberNode.new(0), NumberNode.new(2)),
+          CallNode.new(nil, 'اطبع', [ArrayAccessNode.new(GetLocalNode.new('مصفوفة_الأعداد'), NumberNode.new(0))])
+        ]
+      )
+
+      assert_equal nodes, @parser.parse(code)
+    end
   end
 end
