@@ -2,9 +2,13 @@
 
 module Zaid
   module Nodes
-    BreakNode = Struct.new do
+    class BreakNode
       def eval(_context)
         raise BreakException
+      end
+
+      def ==(other)
+        other.is_a?(BreakNode)
       end
     end
 
