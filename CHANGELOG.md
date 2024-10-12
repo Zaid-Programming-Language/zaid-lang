@@ -11,12 +11,13 @@
     <ul>
       <li>الجمل الشرطية:
         <ul>
-          <li><code>إذا كان</code>.</li>
+          <li><code>وإذا كان</code>.</li>
         </ul>
       </li>
       <li>حلقات التكرار:
         <ul>
           <li><code>توقف</code>.</li>
+          <li><code>التالي</code>.</li>
         </ul>
       </li>
     </ul>
