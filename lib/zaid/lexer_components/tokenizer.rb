@@ -63,6 +63,7 @@ module Zaid
 
         tokens = []
         indent_stack = []
+        @array_stack = 0
 
         parsing_position = 0
         parsing_position += parse_token(code, tokens, indent_stack, parsing_position) while parsing_position < code.size
@@ -85,6 +86,10 @@ module Zaid
 
           position_increase = send(:"parse_#{token[:type]}", match[1], tokens, indent_stack)
 
+          @array_stack += 1 if tokens.last[0] == '['
+          @array_stack -= 1 if tokens.last[0] == ']'
+
+          return position_increase if @array_stack.positive?
           return position_increase unless INDENT_KEYWORDS.include?(match[1])
 
           match = code.match(INDENT_PATTERN, parsing_position + position_increase)
@@ -136,6 +141,8 @@ module Zaid
       end
 
       def parse_dedent(indent, tokens, indent_stack)
+        return indent.size + 1 if @array_stack.positive?
+
         current_indent = indent_stack.last || 0
 
         raise 'خطأ في المسافة البادئة للأسطر.' if indent.size > current_indent
