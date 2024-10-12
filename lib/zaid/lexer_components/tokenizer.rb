@@ -10,6 +10,7 @@ module Zaid
 
       KEYWORDS_MAPPING = {
         AND => :AND,
+        BREAK => :BREAK,
         CLASS => :CLASS,
         DIVIDE => :DIVIDE,
         ELSE => :ELSE,

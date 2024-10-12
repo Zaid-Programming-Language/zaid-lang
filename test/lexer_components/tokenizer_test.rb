@@ -235,6 +235,7 @@ module Zaid
           طالما كان عدد أكبر من ٠ إذن
             اطبع(عدد)
             عدد = عدد - ١
+            توقف
         CODE
 
         tokens = [
@@ -245,6 +246,8 @@ module Zaid
           [:IDENTIFIER, 'اطبع'], ['(', '('], [:IDENTIFIER, 'عدد'], [')', ')'],
           [:NEWLINE, "\n"],
           [:IDENTIFIER, 'عدد'], ['=', '='], [:IDENTIFIER, 'عدد'], ['-', '-'], [:NUMBER, 1],
+          [:NEWLINE, "\n"],
+          [:BREAK, BREAK],
           [:DEDENT, 0]
         ]
 
