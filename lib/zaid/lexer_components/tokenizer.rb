@@ -12,6 +12,7 @@ module Zaid
         AND => :AND,
         BREAK => :BREAK,
         CLASS => :CLASS,
+        CONTINUE => :CONTINUE,
         DIVIDE => :DIVIDE,
         ELSE => :ELSE,
         ELSE_IF => :ELSE_IF,

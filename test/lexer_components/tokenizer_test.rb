@@ -243,6 +243,7 @@ module Zaid
             اطبع(عدد)
             عدد = عدد - ١
             توقف
+            التالي
         CODE
 
         tokens = [
@@ -255,7 +256,10 @@ module Zaid
           [:IDENTIFIER, 'عدد'], ['=', '='], [:IDENTIFIER, 'عدد'], ['-', '-'], [:NUMBER, 1],
           [:NEWLINE, "\n"],
           [:BREAK, BREAK],
-          [:DEDENT, 0]
+          [:NEWLINE, "\n"],
+          [:CONTINUE, CONTINUE],
+          [:DEDENT, 0],
+          [:NEWLINE, "\n"]
         ]
 
         assert_equal tokens, @tokenizer.tokenize(code)
