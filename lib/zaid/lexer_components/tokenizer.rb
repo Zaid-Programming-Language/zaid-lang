@@ -107,10 +107,6 @@ module Zaid
       end
 
       def parse_identifier(identifier, tokens, _)
-        if identifier.end_with?('؟') && (tokens.empty? || ![[:METHOD, METHOD], ['.', '.']].include?(tokens.last))
-          raise 'خطأ: لا يمكن استخدام "؟" في اسم المعرف إلا بعد كلمة "دالة" أو بعد نقطة.'
-        end
-
         tokens << if KEYWORDS_MAPPING.key?(identifier)
                     [KEYWORDS_MAPPING[identifier], identifier]
                   elsif tokens.last == [:CLASS, CLASS]

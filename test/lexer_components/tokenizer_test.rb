@@ -355,14 +355,6 @@ module Zaid
       def test_question_mark_in_method_name
         assert_equal [[:METHOD, METHOD], [:IDENTIFIER, 'صفر؟']], @tokenizer.tokenize('دالة صفر؟')
       end
-
-      def test_invalid_identifier_with_question_mark
-        error = assert_raises(RuntimeError) do
-          @tokenizer.tokenize('صفر؟')
-        end
-
-        assert_equal 'خطأ: لا يمكن استخدام "؟" في اسم المعرف إلا بعد كلمة "دالة" أو بعد نقطة.', error.message
-      end
     end
   end
 end
