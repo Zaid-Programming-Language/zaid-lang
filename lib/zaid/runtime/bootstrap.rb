@@ -38,6 +38,7 @@ Constants['شيء'] = Zaid::Runtime::ZaidClass.new(Constants['نوع'])
 Constants['عدد_صحيح'] = Zaid::Runtime::ZaidClass.new(Constants['شيء'])
 Constants['عدد_عشري'] = Zaid::Runtime::ZaidClass.new(Constants['شيء'])
 Constants['نص'] = Zaid::Runtime::ZaidClass.new(Constants['شيء'])
+Constants['مصفوفة'] = Zaid::Runtime::ZaidClass.new(Constants['شيء'])
 
 root_self = Constants['شيء'].new
 RootContext = Zaid::Runtime::Context.new(root_self)

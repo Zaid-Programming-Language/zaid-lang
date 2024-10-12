@@ -36,6 +36,7 @@ class Parser
     left '||'
     right '='
     left '،'
+    left '['
   preclow
 
   rule
@@ -65,6 +66,8 @@ class Parser
     | Class
     | If
     | While
+    | ArrayLiteral
+    | ArrayAccess
     | '(' Expression ')' { result = val[1] }
     ;
 
@@ -169,6 +172,20 @@ class Parser
 
     While:
       WHILE Expression THEN Block { result = WhileNode.new(val[1], val[3]) }
+    ;
+
+    ArrayLiteral:
+      '[' ']'             { result = ArrayNode.new([]) }
+    | '[' ElementList ']' { result = ArrayNode.new(val[1]) }
+    ;
+
+    ElementList:
+      Expression                 { result = [val[0]] }
+    | ElementList '،' Expression { result = val[0] << val[2] }
+    ;
+
+    ArrayAccess:
+      Expression '[' Expression ']' { result = ArrayAccessNode.new(val[0], val[2]) }
     ;
 end
 

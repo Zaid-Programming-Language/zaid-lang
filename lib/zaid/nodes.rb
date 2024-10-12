@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'nodes/array_access_node'
+require_relative 'nodes/array_node'
 require_relative 'nodes/break_node'
 require_relative 'nodes/call_node'
 require_relative 'nodes/class_node'

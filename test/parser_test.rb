@@ -260,5 +260,70 @@ module Zaid
     def test_semicolon
       assert_equal NodeList.new([NumberNode.new(5), NumberNode.new(3)]), @parser.parse('٥;٣')
     end
+
+    def test_array_node
+      assert_equal NodeList.new([ArrayNode.new([NumberNode.new(1), NumberNode.new(2)])]), @parser.parse('[١، ٢]')
+    end
+
+    def test_array_access_node
+      assert_equal NodeList.new([ArrayAccessNode.new(ArrayNode.new([NumberNode.new(1), NumberNode.new(2)]), NumberNode.new(0))]),
+                   @parser.parse('[١، ٢][٠]')
+    end
+
+    def test_array_variable
+      code = <<~CODE
+        مصفوفة_الأعداد = [١، ٢]
+        اطبع(مصفوفة_الأعداد[٠])
+      CODE
+
+      nodes = NodeList.new(
+        [
+          SetLocalNode.new('مصفوفة_الأعداد', ArrayNode.new([NumberNode.new(1), NumberNode.new(2)])),
+          CallNode.new(nil, 'اطبع', [ArrayAccessNode.new(GetLocalNode.new('مصفوفة_الأعداد'), NumberNode.new(0))])
+        ]
+      )
+
+      assert_equal nodes, @parser.parse(code)
+    end
+
+    def test_array_with_newlines
+      code = <<~CODE
+        مصفوفة_الأعداد = [
+          ١،
+          ٢
+        ]
+
+        اطبع(مصفوفة_الأعداد[٠])
+      CODE
+
+      nodes = NodeList.new(
+        [
+          SetLocalNode.new('مصفوفة_الأعداد', ArrayNode.new([NumberNode.new(1), NumberNode.new(2)])),
+          CallNode.new(nil, 'اطبع', [ArrayAccessNode.new(GetLocalNode.new('مصفوفة_الأعداد'), NumberNode.new(0))])
+        ]
+      )
+
+      assert_equal nodes, @parser.parse(code)
+    end
+
+    def test_nested_arrays
+      code = <<~CODE
+        مصفوفة_الأعداد = [
+          ١،
+          [٢، ٣]
+        ]
+
+        اطبع(مصفوفة_الأعداد[١][٠])
+      CODE
+
+      nodes = NodeList.new(
+        [
+          SetLocalNode.new('مصفوفة_الأعداد', ArrayNode.new([NumberNode.new(1), ArrayNode.new([NumberNode.new(2), NumberNode.new(3)])])),
+          CallNode.new(nil, 'اطبع', [ArrayAccessNode.new(ArrayAccessNode.new(GetLocalNode.new('مصفوفة_الأعداد'), NumberNode.new(1)), NumberNode.new(0))])
+        ]
+      )
+
+      assert_equal nodes, @parser.parse(code)
+    end
   end
 end
