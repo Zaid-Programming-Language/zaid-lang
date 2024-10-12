@@ -220,5 +220,40 @@ module Zaid
 
       assert_output("5\n4\n2\n1\n") { @interpreter.eval(code) }
     end
+
+    def test_array
+      code = <<~CODE
+        مصفوفة_الأعداد = [١، ٢]
+        اطبع(مصفوفة_الأعداد[٠])
+      CODE
+
+      assert_output("1\n") { @interpreter.eval(code) }
+    end
+
+    def test_array_with_newlines
+      code = <<~CODE
+        مصفوفة_الأعداد = [
+          ١،
+          ٢
+        ]
+
+        اطبع(مصفوفة_الأعداد[٠])
+      CODE
+
+      assert_output("1\n") { @interpreter.eval(code) }
+    end
+
+    def test_nested_arrays
+      code = <<~CODE
+        مصفوفة_الأعداد = [
+          ١،
+          [٢، ٣]
+        ]
+
+        اطبع(مصفوفة_الأعداد[١][٠])
+      CODE
+
+      assert_output("2\n") { @interpreter.eval(code) }
+    end
   end
 end
