@@ -192,5 +192,18 @@ module Zaid
 
       assert_output("5\n4\n3\n2\n1\n") { @interpreter.eval(code) }
     end
+
+    def test_while_with_break
+      code = <<~CODE
+        عدد = ٥
+
+        طالما كان عدد أكبر من ٠ إذن
+          اطبع(عدد)
+          عدد = عدد - ١
+          توقف
+      CODE
+
+      assert_output("5\n") { @interpreter.eval(code) }
+    end
   end
 end
