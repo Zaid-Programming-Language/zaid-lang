@@ -31,6 +31,7 @@ module Zaid
         MODULO2 => :MODULO2,
         NIL => :NIL,
         NOT => :NOT,
+        ONE => :ONE,
         OR => :OR,
         PLUS => :PLUS,
         RECEIVE => :RECEIVE,
@@ -39,7 +40,8 @@ module Zaid
         TIMES => :TIMES,
         TRUE => :TRUE,
         WAS => :WAS,
-        WHILE => :WHILE
+        WHILE => :WHILE,
+        ZERO => :ZERO
       }.freeze
 
       COMMENT_PREFIXES = ['#', 'تعليق:', 'ملاحظة:', 'سؤال:'].freeze

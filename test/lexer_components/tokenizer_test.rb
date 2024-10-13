@@ -393,6 +393,11 @@ module Zaid
       def test_question_mark_in_method_name
         assert_equal [[:METHOD, METHOD], [:IDENTIFIER, 'صفر؟']], @tokenizer.tokenize('دالة صفر؟')
       end
+
+      def test_zero_or_one
+        assert_equal [[:ZERO, ZERO]], @tokenizer.tokenize('صفر')
+        assert_equal [[:ONE, ONE]], @tokenizer.tokenize('واحد')
+      end
     end
   end
 end
