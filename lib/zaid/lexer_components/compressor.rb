@@ -50,6 +50,8 @@ module Zaid
             compression_position += compress_arabic_arithmetic_operator(tokens[compression_position], compressed)
           when [:MODULO1, MODULO1], [:MODULO2, MODULO2]
             compression_position += compress_modulo(tokens, compressed, compression_position)
+          when [:ZERO, ZERO], [:ONE, ONE]
+            compression_position += compress_zero_or_one(tokens[compression_position], compressed)
           else
             compressed << tokens[compression_position]
 
@@ -204,6 +206,20 @@ module Zaid
         else
           1
         end
+      end
+
+      # Converts:
+      #   [:ZERO, ZERO] to [:NUMBER, 0]
+      #   [:ONE, ONE] to [:NUMBER, 1]
+      def compress_zero_or_one(token, compressed)
+        case token
+        when [:ZERO, ZERO]
+          compressed << [:NUMBER, 0]
+        when [:ONE, ONE]
+          compressed << [:NUMBER, 1]
+        end
+
+        1
       end
 
       def remove_newlines_before(compressed, keywords)

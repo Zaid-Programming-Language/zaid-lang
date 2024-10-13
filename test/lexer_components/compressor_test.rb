@@ -159,6 +159,11 @@ module Zaid
 
         assert_equal compressed, @compressor.compress(tokens)
       end
+
+      def test_zero_or_one
+        assert_equal [[:NUMBER, 0]], @compressor.compress([[:ZERO, ZERO]])
+        assert_equal [[:NUMBER, 1]], @compressor.compress([[:ONE, ONE]])
+      end
     end
   end
 end
