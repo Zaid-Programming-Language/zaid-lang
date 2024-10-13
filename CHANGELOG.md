@@ -32,6 +32,12 @@
   </li>
 </ul>
 
+<h3 dir="rtl">أُصلِح</h3>
+
+<ul dir="rtl">
+  <li>إصلاح خطأ في معالجة الأسطر الفارغة.</li>
+</ul>
+
 <h2 dir="rtl"><a href="https://github.com/Zaid-Programming-Language/zaid-lang/releases/tag/0.0.1">0.0.1</a> - 2024-10-10</h2>
 
 <h3 dir="rtl">أُضيف</h3>

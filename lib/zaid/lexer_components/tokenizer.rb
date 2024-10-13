@@ -46,6 +46,7 @@ module Zaid
       DIGITS = [ARABIC_DIGITS, ENGLISH_DIGITS].join
 
       TOKEN_PATTERNS = [
+        { pattern: /\G(\n *)\n/m, type: :empty_line },
         { pattern: /\G((#{Regexp.union(COMMENT_PREFIXES)}).*$)/, type: :comment },
         { pattern: /\G([#{ARABIC_CHARACTERS}_ـ][#{ARABIC_CHARACTERS}#{DIGITS}_ـ]*؟?)/, type: :identifier },
         { pattern: /\G([#{DIGITS}]+\.[#{DIGITS}]+)/, type: :float },
@@ -98,6 +99,12 @@ module Zaid
 
           return parse_indent(match[1], tokens, indent_stack) + position_increase
         end
+      end
+
+      def parse_empty_line(empty_line, tokens, _)
+        tokens << [:NEWLINE, "\n"]
+
+        empty_line.size
       end
 
       def parse_comment(comment, tokens, _)
