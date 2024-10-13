@@ -8,6 +8,8 @@ module Zaid
     GREATER = 'أكبر'
     LESS    = 'أصغر'
     MINUS   = 'ناقص'
+    MODULO1 = 'باقي'
+    MODULO2 = 'قسمة'
     NOT     = 'لا'
     PLUS    = 'زائد'
     THAN    = 'من'
