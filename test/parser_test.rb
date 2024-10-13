@@ -343,5 +343,10 @@ module Zaid
 
       assert_equal nodes, @parser.parse(code)
     end
+
+    def test_zero_or_one
+      assert_equal NodeList.new([NumberNode.new(0)]), @parser.parse('صفر')
+      assert_equal NodeList.new([NumberNode.new(1)]), @parser.parse('واحد')
+    end
   end
 end

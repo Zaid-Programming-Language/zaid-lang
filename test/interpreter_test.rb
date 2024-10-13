@@ -293,5 +293,10 @@ module Zaid
 
       assert_output("4\n") { @interpreter.eval(code) }
     end
+
+    def test_zero_or_one
+      assert_equal 0, @interpreter.eval('صفر').ruby_value
+      assert_equal 1, @interpreter.eval('واحد').ruby_value
+    end
   end
 end
