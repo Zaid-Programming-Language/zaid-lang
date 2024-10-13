@@ -305,6 +305,40 @@ module Zaid
         assert_equal tokens, @tokenizer.tokenize(code)
       end
 
+      def test_nested_dedent
+        code = <<~CODE
+          إذا كان ٥ أكبر من ٣ إذن
+            إذا كان ٦ أكبر من ٤ إذن
+              إذا كان ٧ أكبر من ٥ إذن
+                اطبع("أحسنت!")
+              وإلا
+                اطبع("أيضا أحسنت!")
+        CODE
+
+        tokens = [
+          [:IF, IF], [:WAS, WAS], [:NUMBER, 5], [:GREATER, GREATER], [:THAN, THAN], [:NUMBER, 3], [:THEN, THEN],
+          [:INDENT, 2],
+          [:IF, IF], [:WAS, WAS], [:NUMBER, 6], [:GREATER, GREATER], [:THAN, THAN], [:NUMBER, 4], [:THEN, THEN],
+          [:INDENT, 4],
+          [:IF, IF], [:WAS, WAS], [:NUMBER, 7], [:GREATER, GREATER], [:THAN, THAN], [:NUMBER, 5], [:THEN, THEN],
+          [:INDENT, 6],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, 'أحسنت!'], [')', ')'],
+          [:DEDENT, 4],
+          [:NEWLINE, "\n"],
+          [:ELSE, ELSE],
+          [:INDENT, 6],
+          [:IDENTIFIER, 'اطبع'], ['(', '('], [:STRING, 'أيضا أحسنت!'], [')', ')'],
+          [:DEDENT, 4],
+          [:NEWLINE, "\n"],
+          [:DEDENT, 2],
+          [:NEWLINE, "\n"],
+          [:DEDENT, 0],
+          [:NEWLINE, "\n"]
+        ]
+
+        assert_equal tokens, @tokenizer.tokenize(code)
+      end
+
       def test_dedent_error
         code = <<~CODE
           عدد = ٥

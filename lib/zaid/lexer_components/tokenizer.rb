@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'strscan'
+
 require_relative '../keywords'
 require_relative 'compressor'
 
@@ -46,28 +48,27 @@ module Zaid
       DIGITS = [ARABIC_DIGITS, ENGLISH_DIGITS].join
 
       TOKEN_PATTERNS = [
-        { pattern: /\G(\n *)\n/m, type: :empty_line },
-        { pattern: /\G((#{Regexp.union(COMMENT_PREFIXES)}).*$)/, type: :comment },
-        { pattern: /\G([#{ARABIC_CHARACTERS}_ـ][#{ARABIC_CHARACTERS}#{DIGITS}_ـ]*؟?)/, type: :identifier },
-        { pattern: /\G([#{DIGITS}]+\.[#{DIGITS}]+)/, type: :float },
-        { pattern: /\G([#{DIGITS}]+)/, type: :number },
-        { pattern: /\G"([^"]*)"/, type: :string },
-        { pattern: /\G\n( *)/m, type: :dedent },
-        { pattern: /\G(\|\||&&|==|!=|<=|>=|<|>)/, type: :operator },
-        { pattern: /\G(.)/, type: :single_character }
+        { pattern: /\n *\n/m, type: :empty_line },
+        { pattern: /((#{Regexp.union(COMMENT_PREFIXES)}).*$)/, type: :comment },
+        { pattern: /([#{ARABIC_CHARACTERS}_ـ][#{ARABIC_CHARACTERS}#{DIGITS}_ـ]*؟?)/, type: :identifier },
+        { pattern: /([#{DIGITS}]+\.[#{DIGITS}]+)/, type: :float },
+        { pattern: /([#{DIGITS}]+)/, type: :number },
+        { pattern: /"([^"]*)"/, type: :string },
+        { pattern: /\n( *)/m, type: :dedent },
+        { pattern: /(\|\||&&|==|!=|<=|>=|<|>)/, type: :operator },
+        { pattern: /(.)/, type: :single_character }
       ].freeze
 
       INDENT_PATTERN = /\G\n( +)/m
 
       def tokenize(code, run_compression: true)
-        code = code.chomp
+        code = StringScanner.new(code.chomp)
 
         tokens = []
         indent_stack = []
         @array_stack = 0
 
-        parsing_position = 0
-        parsing_position += parse_token(code, tokens, indent_stack, parsing_position) while parsing_position < code.size
+        parse_token(code, tokens, indent_stack) until code.eos?
 
         while indent_stack.pop
           tokens << [:DEDENT, indent_stack.last || 0]
@@ -79,41 +80,36 @@ module Zaid
 
       private
 
-      def parse_token(code, tokens, indent_stack, parsing_position)
+      def parse_token(code, tokens, indent_stack)
         TOKEN_PATTERNS.each do |token|
-          match = code.match(token[:pattern], parsing_position)
+          next unless code.scan(token[:pattern])
 
-          next unless match
+          send(:"parse_#{token[:type]}", code, tokens, indent_stack)
 
-          position_increase = send(:"parse_#{token[:type]}", match[1], tokens, indent_stack)
+          break if @array_stack.positive?
+          break unless INDENT_KEYWORDS.include?(code.captures.first)
 
-          @array_stack += 1 if tokens.last[0] == '['
-          @array_stack -= 1 if tokens.last[0] == ']'
+          raise 'خطأ في المسافة البادئة للأسطر.' unless code.scan(INDENT_PATTERN)
 
-          return position_increase if @array_stack.positive?
-          return position_increase unless INDENT_KEYWORDS.include?(match[1])
+          parse_indent(code, tokens, indent_stack)
 
-          match = code.match(INDENT_PATTERN, parsing_position + position_increase)
-
-          raise 'خطأ في المسافة البادئة للأسطر.' unless match
-
-          return parse_indent(match[1], tokens, indent_stack) + position_increase
+          break
         end
       end
 
-      def parse_empty_line(empty_line, tokens, _)
+      def parse_empty_line(code, tokens, _)
         tokens << [:NEWLINE, "\n"]
 
-        empty_line.size
+        code.pos -= 1
       end
 
-      def parse_comment(comment, tokens, _)
-        tokens << [:COMMENT, comment]
-
-        comment.size
+      def parse_comment(code, tokens, _)
+        tokens << [:COMMENT, code.captures.first]
       end
 
-      def parse_identifier(identifier, tokens, _)
+      def parse_identifier(code, tokens, _)
+        identifier = code.captures.first
+
         tokens << if KEYWORDS_MAPPING.key?(identifier)
                     [KEYWORDS_MAPPING[identifier], identifier]
                   elsif tokens.last == [:CLASS, CLASS]
@@ -121,71 +117,61 @@ module Zaid
                   else
                     [:IDENTIFIER, identifier]
                   end
-
-        identifier.size
       end
 
-      def parse_float(float, tokens, _)
-        tokens << [:FLOAT, float.tr(ARABIC_DIGITS, ENGLISH_DIGITS).to_f]
-
-        float.size
+      def parse_float(code, tokens, _)
+        tokens << [:FLOAT, code.captures.first.tr(ARABIC_DIGITS, ENGLISH_DIGITS).to_f]
       end
 
-      def parse_number(number, tokens, _)
-        tokens << [:NUMBER, number.tr(ARABIC_DIGITS, ENGLISH_DIGITS).to_i]
-
-        number.size
+      def parse_number(code, tokens, _)
+        tokens << [:NUMBER, code.captures.first.tr(ARABIC_DIGITS, ENGLISH_DIGITS).to_i]
       end
 
-      def parse_string(string, tokens, _)
-        tokens << [:STRING, string]
-
-        string.size + 2
+      def parse_string(code, tokens, _)
+        tokens << [:STRING, code.captures.first]
       end
 
-      def parse_dedent(indent, tokens, indent_stack)
-        return indent.size + 1 if @array_stack.positive?
+      def parse_dedent(code, tokens, indent_stack)
+        return if @array_stack.positive?
 
+        indent = code.captures.first.size
         current_indent = indent_stack.last || 0
 
-        raise 'خطأ في المسافة البادئة للأسطر.' if indent.size > current_indent
+        raise 'خطأ في المسافة البادئة للأسطر.' if indent > current_indent
 
-        tokens << [:NEWLINE, "\n"] if indent.size == current_indent
+        tokens << [:NEWLINE, "\n"] if indent == current_indent
 
-        if indent.size < current_indent
-          while indent.size < (indent_stack.last || 0)
-            indent_stack.pop
-            tokens << [:DEDENT, indent.size]
-            tokens << [:NEWLINE, "\n"]
-          end
+        while indent < (indent_stack.last || 0)
+          indent_stack.pop
+          tokens << [:DEDENT, indent]
+          tokens << [:NEWLINE, "\n"]
         end
-
-        indent.size + 1
       end
 
-      def parse_operator(operator, tokens, _)
-        tokens << [operator, operator]
-
-        operator.size
+      def parse_operator(code, tokens, _)
+        tokens << [code.captures.first, code.captures.first]
       end
 
-      def parse_single_character(character, tokens, _)
-        tokens << [character, character] if character != ' '
+      def parse_single_character(code, tokens, _)
+        token = code.captures.first
 
-        1
+        tokens << [token, token] if token != ' '
+
+        @array_stack += 1 if token == '['
+        @array_stack -= 1 if token == ']'
       end
 
-      def parse_indent(indent, tokens, indent_stack)
-        if indent.size <= (indent_stack.last || 0)
+      def parse_indent(code, tokens, indent_stack)
+        indent = code.captures.first.size
+
+        if indent <= (indent_stack.last || 0)
           raise 'خطأ في المسافة البادئة للأسطر، ' \
-                "المسافة البادئة هي #{indent.size} " \
+                "المسافة البادئة هي #{indent} " \
                 "والمسافة البادئة المتوقعة يجب أن تكون أكبر من #{indent_stack.last || 0}"
         end
 
-        indent_stack.push(indent.size)
-        tokens << [:INDENT, indent.size]
-
-        indent.size + 1
+        indent_stack.push(indent)
+        tokens << [:INDENT, indent]
       end
     end
   end
