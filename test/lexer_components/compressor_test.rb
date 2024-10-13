@@ -144,14 +144,17 @@ module Zaid
           [:PLUS, PLUS],
           [:MINUS, MINUS],
           [:TIMES, TIMES],
-          [:DIVIDE, DIVIDE]
+          [:DIVIDE, DIVIDE],
+          [:MODULO1, MODULO1],
+          [:MODULO2, MODULO2]
         ]
 
         compressed = [
           ['+', '+'],
           ['-', '-'],
           ['*', '*'],
-          ['/', '/']
+          ['/', '/'],
+          ['%', '%']
         ]
 
         assert_equal compressed, @compressor.compress(tokens)

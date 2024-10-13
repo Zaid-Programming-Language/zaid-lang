@@ -48,6 +48,8 @@ module Zaid
             compression_position += compress_and(tokens, compressed, compression_position, between_receive_and_then)
           when [:PLUS, PLUS], [:MINUS, MINUS], [:TIMES, TIMES], [:DIVIDE, DIVIDE]
             compression_position += compress_arabic_arithmetic_operator(tokens[compression_position], compressed)
+          when [:MODULO1, MODULO1], [:MODULO2, MODULO2]
+            compression_position += compress_modulo(tokens, compressed, compression_position)
           else
             compressed << tokens[compression_position]
 
@@ -191,6 +193,17 @@ module Zaid
         end
 
         1
+      end
+
+      # Converts [[:MODULO1, MODULO1], [:MODULO2, MODULO2]] to ['%', '%'].
+      def compress_modulo(tokens, compressed, compression_position)
+        compressed << ['%', '%']
+
+        if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:MODULO2, MODULO2]
+          2
+        else
+          1
+        end
       end
 
       def remove_newlines_before(compressed, keywords)
