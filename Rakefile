@@ -46,4 +46,15 @@ task :benchmark do
   end
 end
 
+desc 'Count lines of code'
+task :cloc do
+  puts 'Source code:'
+  sh 'cloc lib --exclude-list-file=lib/zaid/parser.rb'
+
+  puts ''
+
+  puts 'Tests:'
+  sh 'cloc test'
+end
+
 task default: :test
