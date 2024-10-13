@@ -11,10 +11,12 @@ module Zaid
     MODULO1 = 'باقي'
     MODULO2 = 'قسمة'
     NOT     = 'لا'
+    ONE     = 'واحد'
     PLUS    = 'زائد'
     THAN    = 'من'
     TIMES   = 'ضرب'
     WAS     = 'كان'
+    ZERO    = 'صفر'
 
     # Uncompressable keywords:
     BREAK    = 'توقف'
