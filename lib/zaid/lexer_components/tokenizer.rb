@@ -27,6 +27,8 @@ module Zaid
         LESS => :LESS,
         METHOD => :METHOD,
         MINUS => :MINUS,
+        MODULO1 => :MODULO1,
+        MODULO2 => :MODULO2,
         NIL => :NIL,
         NOT => :NOT,
         OR => :OR,

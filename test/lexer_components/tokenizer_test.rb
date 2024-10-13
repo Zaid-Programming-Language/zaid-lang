@@ -153,8 +153,11 @@ module Zaid
         assert_equal [['-', '-']], @tokenizer.tokenize('-')
         assert_equal [['*', '*']], @tokenizer.tokenize('*')
         assert_equal [['/', '/']], @tokenizer.tokenize('/')
+        assert_equal [['%', '%']], @tokenizer.tokenize('%')
         assert_equal [['(', '(']], @tokenizer.tokenize('(')
         assert_equal [[')', ')']], @tokenizer.tokenize(')')
+        assert_equal [['[', '[']], @tokenizer.tokenize('[')
+        assert_equal [[']', ']']], @tokenizer.tokenize(']')
       end
 
       def test_arabic_arithmetic_operator
@@ -162,6 +165,7 @@ module Zaid
         assert_equal [[:MINUS, MINUS]], @tokenizer.tokenize('ناقص')
         assert_equal [[:TIMES, TIMES]], @tokenizer.tokenize('ضرب')
         assert_equal [[:DIVIDE, DIVIDE]], @tokenizer.tokenize('تقسيم')
+        assert_equal [[:MODULO1, MODULO1], [:MODULO2, MODULO2]], @tokenizer.tokenize('باقي قسمة')
       end
 
       def test_if_statement
