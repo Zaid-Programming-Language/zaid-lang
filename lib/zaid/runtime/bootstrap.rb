@@ -3,7 +3,7 @@
 require_relative 'context'
 require_relative 'zaid_class'
 
-ARITHMETIC_OPERATIONS = %i[+ * - /].freeze
+ARITHMETIC_OPERATIONS = %i[+ * - / %].freeze
 COMPARISON_OPERATIONS = %i[== != > < >= <=].freeze
 
 def define_arithmetic_operations(class_name, operations)
