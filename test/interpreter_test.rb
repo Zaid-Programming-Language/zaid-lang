@@ -39,6 +39,7 @@ module Zaid
       assert_equal(-1, @interpreter.eval('١ - ٢').ruby_value)
       assert_equal 2, @interpreter.eval('١ * ٢').ruby_value
       assert_equal 0, @interpreter.eval('١ / ٢').ruby_value
+      assert_equal 1, @interpreter.eval('١ % ٢').ruby_value
     end
 
     def test_arithmetic_operations_on_floats
@@ -46,6 +47,7 @@ module Zaid
       assert_in_delta(-1.0, @interpreter.eval('١.٠ - ٢').ruby_value)
       assert_in_delta(2.0, @interpreter.eval('١.٠ * ٢').ruby_value)
       assert_in_delta(0.5, @interpreter.eval('١.٠ / ٢').ruby_value)
+      assert_in_delta(1.0, @interpreter.eval('١.٠ % ٢').ruby_value)
     end
 
     def test_arithmetic_operations_on_strings
@@ -58,6 +60,7 @@ module Zaid
       assert_equal(-1, @interpreter.eval('١ ناقص ٢').ruby_value)
       assert_equal 2, @interpreter.eval('١ ضرب ٢').ruby_value
       assert_equal 0, @interpreter.eval('١ تقسيم ٢').ruby_value
+      assert_equal 1, @interpreter.eval('١ باقي قسمة ٢').ruby_value
     end
 
     def test_comparison_operations_on_integers
