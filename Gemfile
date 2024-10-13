@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in zaidd-lang.gemspec
 gemspec
 
+gem 'benchmark-ips', '~> 2.14'
 gem 'minitest', '~> 5.25', '>= 5.25.1'
 gem 'racc', '~> 1.8', '>= 1.8.1'
 gem 'rake', '~> 13.2', '>= 13.2.1'
