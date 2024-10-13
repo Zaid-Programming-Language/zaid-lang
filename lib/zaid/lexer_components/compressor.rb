@@ -62,39 +62,33 @@ module Zaid
 
       # Comverts [[:IF, IF], [:WAS, WAS]] to [:IF, "#{IF} #{WAS}"].
       def compress_if(tokens, compressed, compression_position)
-        if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:WAS, WAS]
-          compressed << [:IF, "#{IF} #{WAS}"]
+        compressed << [:IF, "#{IF} #{WAS}"]
 
+        if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:WAS, WAS]
           2
         else
-          compressed << tokens[compression_position]
-
           1
         end
       end
 
       # Comverts [[:ELSE_IF, ELSE_IF], [:WAS, WAS]] to [:ELSE_IF, "#{ELSE_IF} #{WAS}"].
       def compress_else_if(tokens, compressed, compression_position)
-        if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:WAS, WAS]
-          compressed << [:ELSE_IF, "#{ELSE_IF} #{WAS}"]
+        compressed << [:ELSE_IF, "#{ELSE_IF} #{WAS}"]
 
+        if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:WAS, WAS]
           2
         else
-          compressed << tokens[compression_position]
-
           1
         end
       end
 
       # Comverts [[:WHILE, WHILE], [:WAS, WAS]] to [:WHILE, "#{WHILE} #{WAS}"].
       def compress_while(tokens, compressed, compression_position)
-        if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:WAS, WAS]
-          compressed << [:WHILE, "#{WHILE} #{WAS}"]
+        compressed << [:WHILE, "#{WHILE} #{WAS}"]
 
+        if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:WAS, WAS]
           2
         else
-          compressed << tokens[compression_position]
-
           1
         end
       end
@@ -115,7 +109,7 @@ module Zaid
             2
           end
         else
-          compressed << tokens[compression_position]
+          compressed << ['>', '>']
 
           1
         end
@@ -137,7 +131,7 @@ module Zaid
             2
           end
         else
-          compressed << tokens[compression_position]
+          compressed << ['<', '<']
 
           1
         end
@@ -152,13 +146,11 @@ module Zaid
 
       # Converts [[:NOT, NOT], [:EQUALS, EQUALS]] to ['!=', '!='].
       def compress_not_equals(tokens, compressed, compression_position)
-        if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:EQUALS, EQUALS]
-          compressed << ['!=', '!=']
+        compressed << ['!=', '!=']
 
+        if compression_position + 1 < tokens.length && tokens[compression_position + 1] == [:EQUALS, EQUALS]
           2
         else
-          compressed << tokens[compression_position]
-
           1
         end
       end
