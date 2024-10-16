@@ -36,7 +36,6 @@ module Zaid
         CODE
 
         tokens = [
-          [:NEWLINE, "\n"],
           [:COMMENT, '# هذا تعليق في بداية البرنامج'],
           [:NEWLINE, "\n"],
           [:NEWLINE, "\n"],

@@ -102,7 +102,7 @@ module Zaid
       end
 
       def parse_empty_line(code, tokens, _)
-        tokens << [:NEWLINE, "\n"] && !tokens.empty?
+        tokens << [:NEWLINE, "\n"] unless tokens.empty?
 
         code.pos -= 1
       end
