@@ -102,7 +102,7 @@ module Zaid
       end
 
       def parse_empty_line(code, tokens, _)
-        tokens << [:NEWLINE, "\n"]
+        tokens << [:NEWLINE, "\n"] && !tokens.empty?
 
         code.pos -= 1
       end
@@ -143,7 +143,7 @@ module Zaid
 
         raise 'خطأ في المسافة البادئة للأسطر.' if indent > current_indent
 
-        tokens << [:NEWLINE, "\n"] if indent == current_indent
+        tokens << [:NEWLINE, "\n"] if indent == current_indent && !tokens.empty?
 
         while indent < (indent_stack.last || 0)
           indent_stack.pop
