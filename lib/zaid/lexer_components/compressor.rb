@@ -22,7 +22,7 @@ module Zaid
             compressed << tokens[compression_position]
 
             compression_position += 1
-          when [:THEN, THEN]
+          when [:IT_IS, IT_IS]
             between_receive_and_then = false
 
             compressed << tokens[compression_position]
