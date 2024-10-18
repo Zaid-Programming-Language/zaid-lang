@@ -26,7 +26,7 @@ class Parser
   token WHILE
 
   prechigh
-    left '.'
+    left '.' '['
     right '!'
     left '%' '*' '/'
     left '+' '-'
@@ -36,7 +36,6 @@ class Parser
     left '||'
     right '='
     left '،'
-    left '['
   preclow
 
   rule
