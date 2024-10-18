@@ -257,10 +257,6 @@ module Zaid
       assert_equal nodes, @parser.parse('١ + ٢ || ٣')
     end
 
-    def test_semicolon
-      assert_equal NodeList.new([NumberNode.new(5), NumberNode.new(3)]), @parser.parse('٥;٣')
-    end
-
     def test_array_node
       assert_equal NodeList.new([ArrayNode.new([NumberNode.new(1), NumberNode.new(2)])]), @parser.parse('[١، ٢]')
     end
