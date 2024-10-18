@@ -100,6 +100,9 @@ module Zaid
     end
 
     def test_logical_operations
+      assert @interpreter.eval('٥ > ٣ و ٥ > ٢')
+      assert @interpreter.eval('٥ < ٣ أو ٥ > ٢')
+
       assert @interpreter.eval('٥ > ٣ && ٥ > ٢')
       assert @interpreter.eval('٥ < ٣ || ٥ > ٢')
     end
