@@ -74,7 +74,7 @@ class Parser
 
     Terminator:
       NEWLINE
-    | ';'
+    | COMMENT
     ;
 
     Literal:
@@ -215,9 +215,5 @@ end
   end
 
   def next_token
-    token = @tokens.shift
-
-    return token unless token && token[0] == :COMMENT
-
-    next_token
+    @tokens.shift
   end
